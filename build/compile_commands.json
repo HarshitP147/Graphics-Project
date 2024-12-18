@@ -1,0 +1,92 @@
+[
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/main.dir/includes_CXX.rsp -g -o CMakeFiles\\main.dir\\src\\main.cpp.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\src\\main.cpp\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/src/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/main.dir/includes_CXX.rsp -g -o CMakeFiles\\main.dir\\src\\util\\LoadShaders.cpp.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\src\\util\\LoadShaders.cpp\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/src/util/LoadShaders.cpp",
+  "output": "CMakeFiles/main.dir/src/util/LoadShaders.cpp.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glad-3.3",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -Dglad_EXPORTS @CMakeFiles/glad.dir/includes_C.rsp -g -o CMakeFiles\\glad.dir\\src\\gl.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glad-3.3\\src\\gl.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glad-3.3/src/gl.c",
+  "output": "external/glad-3.3/CMakeFiles/glad.dir/src/gl.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\context.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\context.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/context.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/context.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\init.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\init.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/init.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/init.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\input.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\input.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/input.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/input.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\monitor.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\monitor.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/monitor.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/monitor.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\window.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\window.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/window.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/window.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\win32_init.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\win32_init.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/win32_init.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/win32_init.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\win32_monitor.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\win32_monitor.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/win32_monitor.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/win32_monitor.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\win32_time.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\win32_time.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/win32_time.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/win32_time.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\win32_tls.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\win32_tls.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/win32_tls.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/win32_tls.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\win32_window.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\win32_window.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/win32_window.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/win32_window.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\winmm_joystick.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\winmm_joystick.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/winmm_joystick.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/winmm_joystick.c.obj"
+},
+{
+  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glfw-3.1.2/src",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -Dglfw_EXPORTS @CMakeFiles/glfw.dir/includes_C.rsp -g -o CMakeFiles\\glfw.dir\\wgl_context.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glfw-3.1.2\\src\\wgl_context.c\"",
+  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glfw-3.1.2/src/wgl_context.c",
+  "output": "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/wgl_context.c.obj"
+}
+]

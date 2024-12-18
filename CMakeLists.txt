@@ -20,7 +20,7 @@ include_directories(
 add_executable(main
 	src/main.cpp
 	src/util/LoadShaders.cpp
-	src/objects/grid.cpp
+	src/headers/
 )
 target_link_libraries(main
 	${OPENGL_LIBRARY}
