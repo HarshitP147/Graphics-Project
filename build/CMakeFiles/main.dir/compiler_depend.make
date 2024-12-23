@@ -87,6 +87,7 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/camera.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/grid.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/skybox.h \
+  C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/CheckError.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/LoadShaders.h \
   C:/msys64/mingw64/include/GL/gl.h \
   C:/msys64/mingw64/include/_mingw.h \
@@ -623,6 +624,8 @@ C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detai
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detail/func_packing.inl:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp:
+
+C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/CheckError.h:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detail/func_trigonometric.inl:
 

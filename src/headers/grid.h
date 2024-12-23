@@ -21,7 +21,7 @@ class Grid {
 
             // Grid data
             const int grid_size = 10;
-            const float grid_spacing = 250.0f;
+            const float grid_spacing = 10.0f;
             std::vector<float> vertices;
             for (int i = -grid_size; i <= grid_size; ++i) {
                 // Lines parallel to X-axis

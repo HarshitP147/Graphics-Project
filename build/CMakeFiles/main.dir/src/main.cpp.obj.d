@@ -317,13 +317,7 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/skybox.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/stb/stb_image.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
- C:/msys64/mingw64/include/stdarg.h \
- C:/msys64/mingw64/include/_mingw_stdarg.h \
- C:/msys64/mingw64/include/string.h \
- C:/msys64/mingw64/include/sec_api/string_s.h \
- C:/msys64/mingw64/include/c++/14.2.0/math.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/util/CheckError.h \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/ostream \
  C:/msys64/mingw64/include/c++/14.2.0/ios \
@@ -368,6 +362,13 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/stb/stb_image.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
+ C:/msys64/mingw64/include/stdarg.h \
+ C:/msys64/mingw64/include/_mingw_stdarg.h \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/msys64/mingw64/include/c++/14.2.0/math.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/camera.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLFW-3~1.2/include/GLFW/glfw3.h \
  C:/msys64/mingw64/include/GL/gl.h

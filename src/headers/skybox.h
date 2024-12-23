@@ -3,13 +3,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "util/LoadShaders.h"
+#include "util/CheckError.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
 #include <iostream>
+#include <vector>
 #define _USE_MATH_DEFINES
 #include <math.h>
+
 
 class Skybox{
     GLfloat vertex_buffer_data[72] = {
@@ -234,25 +237,26 @@ class Skybox{
     GLuint programID;
 
     private:
-        GLuint LoadTextureTileBox(const char *texture_file_path){
+        GLuint LoadTextureTileBox(const char *texture_path) {
             int w, h, channels;
-
-            uint8_t *img = stbi_load(texture_file_path, &w, &h, &channels, 3);
             GLuint texture;
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_2D, texture);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+            uint8_t *img = stbi_load(texture_path, &w, &h, &channels, 3);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
             // To tile textures on a box, we set wrapping to repeat
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
 
             if (img) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
                 glGenerateMipmap(GL_TEXTURE_2D);
             } else {
-                std::cout << "Failed to load texture " << texture_file_path << std::endl;
+                std::cout << "Failed to load texture " << texture_path << std::endl;
             }
             stbi_image_free(img);
 
@@ -303,9 +307,11 @@ class Skybox{
             textureSamplerID = glGetUniformLocation(programID, "textureSampler");
         }
 
-        void render(glm::mat4 cameraMatrix) {
+        void render(glm::mat4 cameraMatrix,glm::vec3 cameraPosition) {
 
             glUseProgram(programID);
+
+            glBindVertexArray(vertexArrayID);
 
             glEnableVertexAttribArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -317,7 +323,14 @@ class Skybox{
 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
 
+
             glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+            // Make sure that the skybox is always centered around the camera
+            modelMatrix = glm::translate(modelMatrix, -cameraPosition);
+
+            // Scale up the skybox by 100 times
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(10000.0f));
 
             // Complete the MVP transform
             glm::mat4 mvp = cameraMatrix * modelMatrix;
@@ -340,6 +353,7 @@ class Skybox{
             );
             glDepthMask(GL_TRUE);
 
+            glBindVertexArray(0);
             glDisableVertexAttribArray(0);
             glDisableVertexAttribArray(1);
             glDisableVertexAttribArray(2);

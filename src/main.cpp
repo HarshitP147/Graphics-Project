@@ -2,7 +2,12 @@
 #include <headers/skybox.h>
 #include <headers/camera.h>
 
+#include <iostream>
+#include <vector>
+using std::vector;
+
 #include <GLFW/glfw3.h>
+
 
 static GLFWwindow *window;
 
@@ -17,22 +22,32 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
         camera->resetCamera();
     }
 
-    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-        camera->lookRight();
-    }
-
-    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        camera->moveForward();
-    }
-
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         camera->lookLeft();
     }
 
-    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+        camera->lookRight();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        camera->moveForward();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
         camera->moveBackward();
     }
+
+    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+        camera->moveLeft();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        camera->moveRight();
+    }
+
 }
+
 
 int main() {
 
@@ -65,7 +80,7 @@ int main() {
 	glClearColor(0.2f, 0.2f, 0.25f, 0.0f);
 
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    // glEnable(GL_CULL_FACE);
 
     // Handle input events
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -74,15 +89,25 @@ int main() {
     // Now we initialize our objects
     camera = new Camera();
 
-    Grid gd;
+    Skybox sb("../src/assets/sky.png");
 
-    Skybox sb("../src/assets/sky_debug.png");
+    Grid gd;
 
     do{
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glm::mat4 vp = camera->getViewProjectionMatrix();
+        glm::mat4 viewMatrix = camera->getViewMatrix();
+        glm::mat4 projectionMatrix = camera->getProjectionMatrix();
 
+        glm::mat4 vp = projectionMatrix * viewMatrix;
+
+        glm::vec3 cameraPosition = camera->getCameraPosition();
+
+        glm::mat4 skyBoxVP = projectionMatrix * glm::mat4(glm::mat3(viewMatrix));
+
+        sb.render(vp, cameraPosition);
+
+        gd.render(vp);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
