@@ -54,8 +54,14 @@ class Grid {
             glBindVertexArray(0);
         }
 
-        void render(const glm::mat4& mvp) {
+        void render(const glm::mat4& cameraMatrix) {
             glUseProgram(shaderProgram);
+
+            glm::mat4 model = glm::mat4(1.0f);
+
+            glm::mat4 mvp = cameraMatrix * model;
+
+
             glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, &mvp[0][0]);
 
             glBindVertexArray(gridVAO);

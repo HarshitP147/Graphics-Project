@@ -5,9 +5,6 @@
 #include "util/LoadShaders.h"
 #include "util/CheckError.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
-
 #include <iostream>
 #include <vector>
 #define _USE_MATH_DEFINES
@@ -261,7 +258,7 @@ class Skybox{
             stbi_image_free(img);
 
             return texture;
-}
+        }
 
     public:
         Skybox(const char *texturePath){
@@ -327,10 +324,13 @@ class Skybox{
             glm::mat4 modelMatrix = glm::mat4(1.0f);
 
             // Make sure that the skybox is always centered around the camera
-            modelMatrix = glm::translate(modelMatrix, -cameraPosition);
+            // modelMatrix = glm::translate(modelMatrix, -cameraPosition);
 
             // Scale up the skybox by 100 times
             modelMatrix = glm::scale(modelMatrix, glm::vec3(10000.0f));
+
+            // Rotate the matrix by -45 degrees around the Y axis
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(180.0f), glm::vec3(0, 1, 0));
 
             // Complete the MVP transform
             glm::mat4 mvp = cameraMatrix * modelMatrix;
@@ -342,6 +342,11 @@ class Skybox{
             glEnableVertexAttribArray(2);
             glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+            // Bind the texture
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glUniform1i(textureSamplerID, 1);
 
             // Draw the box
             glDepthMask(GL_FALSE);

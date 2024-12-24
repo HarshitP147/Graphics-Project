@@ -1,10 +1,9 @@
+#include <headers/model.h>
 #include <headers/grid.h>
 #include <headers/skybox.h>
+#include <headers/Hut.h>
 #include <headers/camera.h>
-
-#include <iostream>
-#include <vector>
-using std::vector;
+#include <headers/Terrain.h>
 
 #include <GLFW/glfw3.h>
 
@@ -89,9 +88,36 @@ int main() {
     // Now we initialize our objects
     camera = new Camera();
 
-    Skybox sb("../src/assets/sky.png");
+    std::vector<std::string> texture_images = {
+        "../src/assets/models/train/03.jpg",
+        "../src/assets/models/train/AVE.JPG",
+        "../src/assets/models/train/AVEENG.jpg",
+        // "../src/assets/train/AVELEFT.jpg"
+        // "../src/assets/train/AVERIGHT.jpg"
+        // "../src/assets/train/BLANCO.jpg",
+        "../src/assets/models/train/GRIS.jpg",
+        "../src/assets/models/train/LATERAL.jpg",
+        "../src/assets/models/train/RENFE.jpg",
+        "../src/assets/models/train/RENFECIR.jpg",
+        "../src/assets/models/train/V.jpg"
+    };
 
-    Grid gd;
+    // Model maglev("../src/assets/train/AnyConv.com__AVEENG_L.obj");
+    // Model maglev("../src/assets/models/train/AnyConv.com__AVEENG_L.obj", texture_images);
+
+    // Model field("../src/assets/models/field/mount.blend1.obj");
+
+    // Skybox sb("../src/assets/skyboxes/skybox1.jpg");
+    // Hut b;
+
+    // Terrain tr("../src/assets/models/terrain/mount.blend1.obj");)
+    Terrain tr(
+        "../src/assets/models/field/mount.blend1.obj",
+        "../src/assets/models/field",
+        "../src/shaders/terrain.vert",
+        "../src/shaders/terrain.frag"
+    );
+
 
     do{
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -105,9 +131,13 @@ int main() {
 
         glm::mat4 skyBoxVP = projectionMatrix * glm::mat4(glm::mat3(viewMatrix));
 
-        sb.render(vp, cameraPosition);
+        // sb.render(vp, cameraPosition);
+        // b.render(vp);
 
-        gd.render(vp);
+        // field.render(vp);
+        tr.render(vp);
+        // maglev.render(vp);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();

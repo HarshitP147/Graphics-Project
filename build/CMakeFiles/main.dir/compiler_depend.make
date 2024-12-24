@@ -83,9 +83,13 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/vector_relational.hpp \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glad-3.3/include/KHR/khrplatform.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glad-3.3/include/glad/gl.h \
+  C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/obj/obj_loader.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/stb/stb_image.h \
+  C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/Hut.h \
+  C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/Terrain.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/camera.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/grid.h \
+  C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/model.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/skybox.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/CheckError.h \
   C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/LoadShaders.h \
@@ -108,13 +112,16 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/charconv.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/concept_check.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/cpp_type_traits.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_forced.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_init_exception.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/exception.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/exception_defines.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/exception_ptr.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/functexcept.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h \
@@ -131,6 +138,7 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/bits/move.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/nested_exception.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/ostream_insert.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/postypes.h \
@@ -140,6 +148,7 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/bits/refwrap.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/requires_hosted.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/specfun.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/std_abs.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algobase.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
@@ -148,7 +157,13 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator_base_funcs.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator_base_types.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multiset.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_pair.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_set.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/streambuf.tcc \
@@ -172,26 +187,32 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/cstdint \
   C:/msys64/mingw64/include/c++/14.2.0/cstdio \
   C:/msys64/mingw64/include/c++/14.2.0/cstdlib \
+  C:/msys64/mingw64/include/c++/14.2.0/cstring \
   C:/msys64/mingw64/include/c++/14.2.0/cwchar \
   C:/msys64/mingw64/include/c++/14.2.0/cwctype \
   C:/msys64/mingw64/include/c++/14.2.0/debug/assertions.h \
   C:/msys64/mingw64/include/c++/14.2.0/debug/debug.h \
   C:/msys64/mingw64/include/c++/14.2.0/exception \
+  C:/msys64/mingw64/include/c++/14.2.0/ext/aligned_buffer.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/atomicity.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/numeric_traits.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/string_conversions.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/type_traits.h \
+  C:/msys64/mingw64/include/c++/14.2.0/fstream \
   C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
   C:/msys64/mingw64/include/c++/14.2.0/ios \
   C:/msys64/mingw64/include/c++/14.2.0/iosfwd \
   C:/msys64/mingw64/include/c++/14.2.0/iostream \
   C:/msys64/mingw64/include/c++/14.2.0/istream \
   C:/msys64/mingw64/include/c++/14.2.0/limits \
+  C:/msys64/mingw64/include/c++/14.2.0/map \
   C:/msys64/mingw64/include/c++/14.2.0/math.h \
   C:/msys64/mingw64/include/c++/14.2.0/new \
   C:/msys64/mingw64/include/c++/14.2.0/ostream \
   C:/msys64/mingw64/include/c++/14.2.0/pstl/pstl_config.h \
+  C:/msys64/mingw64/include/c++/14.2.0/set \
+  C:/msys64/mingw64/include/c++/14.2.0/sstream \
   C:/msys64/mingw64/include/c++/14.2.0/stdexcept \
   C:/msys64/mingw64/include/c++/14.2.0/stdlib.h \
   C:/msys64/mingw64/include/c++/14.2.0/streambuf \
@@ -213,10 +234,13 @@ CMakeFiles/main.dir/src/main.cpp.obj: C:/Users/Harshit\ Pandit/Desktop/graphics-
   C:/msys64/mingw64/include/c++/14.2.0/tuple \
   C:/msys64/mingw64/include/c++/14.2.0/type_traits \
   C:/msys64/mingw64/include/c++/14.2.0/typeinfo \
+  C:/msys64/mingw64/include/c++/14.2.0/utility \
   C:/msys64/mingw64/include/c++/14.2.0/vector \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/atomic_word.h \
+  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
+  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/cpu_defines.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_base.h \
@@ -597,6 +621,8 @@ C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detai
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detail/setup.hpp:
 
+C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/Hut.h:
+
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/detail/func_integer.hpp:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxint8intrin.h:
@@ -759,25 +785,35 @@ C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glm-0.9.7.1/glm/vecto
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glad-3.3/include/KHR/khrplatform.h:
 
-C:/msys64/mingw64/include/c++/14.2.0/fstream:
-
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/prfchwintrin.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/fstream:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/move.h:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/glad-3.3/include/glad/gl.h:
 
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/uintrintrin.h:
+
+C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/obj/obj_loader.h:
+
 C:/msys64/mingw64/include/stdint.h:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/external/stb/stb_image.h:
+
+C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/Terrain.h:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/camera.h:
 
 C:/msys64/mingw64/include/setjmp.h:
 
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h:
+
 C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h:
 
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/grid.h:
+
+C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/headers/model.h:
 
 C:/msys64/mingw64/include/time.h:
 
@@ -827,6 +863,10 @@ C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h:
 
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h:
+
 C:/msys64/mingw64/include/c++/14.2.0/bits/cpp_type_traits.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/stl_construct.h:
@@ -837,11 +877,17 @@ C:/msys64/mingw64/include/c++/14.2.0/debug/assertions.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_init_exception.h:
 
+C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h:
+
 C:/msys64/mingw64/include/c++/14.2.0/bits/exception.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/exception_defines.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/exception_ptr.h:
+
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/usermsrintrin.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxvnniintrin.h:
 
@@ -856,6 +902,8 @@ C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h:
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/ios_base.h:
 
@@ -883,6 +931,10 @@ C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/nested_exception.h:
 
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm4intrin.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h:
+
 C:/Users/Harshit\ Pandit/Desktop/graphics-project/src/util/LoadShaders.cpp:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc:
@@ -906,6 +958,8 @@ C:/msys64/mingw64/include/c++/14.2.0/bits/refwrap.h:
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/raointintrin.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/specfun.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc:
 
 C:/msys64/mingw64/include/c++/14.2.0/cstdint:
 
@@ -937,7 +991,17 @@ C:/msys64/mingw64/include/process.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/stl_iterator_base_types.h:
 
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h:
+
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnnivlintrin.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multiset.h:
+
 C:/msys64/mingw64/include/c++/14.2.0/bits/stl_pair.h:
+
+C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm3intrin.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/bits/stl_set.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h:
 
@@ -977,11 +1041,15 @@ C:/msys64/mingw64/include/c++/14.2.0/cstdio:
 
 C:/msys64/mingw64/include/c++/14.2.0/cstdlib:
 
+C:/msys64/mingw64/include/c++/14.2.0/cstring:
+
 C:/msys64/mingw64/include/c++/14.2.0/cwchar:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/cwctype:
+
+C:/msys64/mingw64/include/c++/14.2.0/ext/aligned_buffer.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h:
 
@@ -1005,6 +1073,8 @@ C:/msys64/mingw64/include/c++/14.2.0/iostream:
 
 C:/msys64/mingw64/include/c++/14.2.0/limits:
 
+C:/msys64/mingw64/include/c++/14.2.0/map:
+
 C:/msys64/mingw64/include/c++/14.2.0/math.h:
 
 C:/msys64/mingw64/include/corecrt_wstdlib.h:
@@ -1014,6 +1084,10 @@ C:/msys64/mingw64/include/c++/14.2.0/new:
 C:/msys64/mingw64/include/c++/14.2.0/ostream:
 
 C:/msys64/mingw64/include/c++/14.2.0/pstl/pstl_config.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/set:
+
+C:/msys64/mingw64/include/c++/14.2.0/sstream:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/shaintrin.h:
 
@@ -1071,11 +1145,17 @@ C:/msys64/mingw64/include/c++/14.2.0/type_traits:
 
 C:/msys64/mingw64/include/c++/14.2.0/typeinfo:
 
+C:/msys64/mingw64/include/c++/14.2.0/utility:
+
 C:/msys64/mingw64/include/c++/14.2.0/vector:
 
 C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/atomic_word.h:
 
+C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h:
+
 C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h:
+
+C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h:
 
 C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h:
 
@@ -1213,8 +1293,6 @@ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vlintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnniintrin.h:
 
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnnivlintrin.h:
-
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vp2intersectintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vpopcntdqvlintrin.h:
@@ -1269,10 +1347,6 @@ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/prfchiintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sgxintrin.h:
 
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm3intrin.h:
-
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm4intrin.h:
-
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h:
@@ -1285,12 +1359,6 @@ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tmmintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tsxldtrkintrin.h:
 
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/uintrintrin.h:
-
-C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc:
-
-C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/usermsrintrin.h:
-
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/waitpkgintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wmmintrin.h:
@@ -1302,13 +1370,3 @@ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h:
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavecintrin.h:
 
 C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsavesintrin.h:
-
-C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h:
-
-C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc:
-
-C:/msys64/mingw64/include/c++/14.2.0/sstream:
-
-C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h:
-
-C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h:
