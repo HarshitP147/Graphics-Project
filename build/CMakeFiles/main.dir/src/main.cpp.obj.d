@@ -1,6 +1,5 @@
 CMakeFiles/main.dir/src/main.cpp.obj: \
  C:\Users\Harshit\ Pandit\Desktop\graphics-project\src\main.cpp \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/model.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/glad-3.3/include/glad/gl.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/glad-3.3/include/KHR/khrplatform.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
@@ -260,34 +259,23 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/../gtc/constants.hpp \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/../gtc/constants.inl \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/matrix_transform.inl \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/obj/obj_loader.h \
- C:/msys64/mingw64/include/c++/14.2.0/map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/new \
- C:/msys64/mingw64/include/c++/14.2.0/bits/exception.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_function.h \
- C:/msys64/mingw64/include/c++/14.2.0/backward/binders.h \
- C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/alloc_traits.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_construct.h \
- C:/msys64/mingw64/include/c++/14.2.0/ext/aligned_buffer.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
- C:/msys64/mingw64/include/c++/14.2.0/tuple \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/range_access.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/type_ptr.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/../gtc/quaternion.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/../gtc/quaternion.inl \
+ C:/msys64/mingw64/include/c++/14.2.0/cstring \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtc/type_ptr.inl \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/string_cast.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtc/type_precision.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtc/../gtc/vec1.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtc/../gtc/vec1.inl \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtc/type_precision.inl \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtx/dual_quaternion.hpp \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/../gtx/dual_quaternion.inl \
  C:/msys64/mingw64/include/c++/14.2.0/string \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stringfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/postypes.h \
  C:/msys64/mingw64/include/c++/14.2.0/cwchar \
@@ -297,6 +285,11 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/_mingw_stat64.h \
  C:/msys64/mingw64/include/swprintf.inl \
  C:/msys64/mingw64/include/sec_api/wchar_s.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/new \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/exception.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/localefwd.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h \
  C:/msys64/mingw64/include/c++/14.2.0/clocale \
@@ -307,8 +300,16 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/ctype.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream_insert.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_forced.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/backward/binders.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/refwrap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/range_access.h \
+ C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/alloc_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_construct.h \
  C:/msys64/mingw64/include/c++/14.2.0/string_view \
  C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h \
@@ -318,14 +319,30 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/14.2.0/cerrno \
  C:/msys64/mingw64/include/c++/14.2.0/bits/charconv.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
+ C:/msys64/mingw64/include/c++/14.2.0/tuple \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLM-09~1.1/glm/gtx/string_cast.inl \
+ C:/msys64/mingw64/include/c++/14.2.0/cstdarg \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
+ C:/msys64/mingw64/include/stdarg.h \
+ C:/msys64/mingw64/include/_mingw_stdarg.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLFW-3~1.2/include/GLFW/glfw3.h \
+ C:/msys64/mingw64/include/GL/gl.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/obj/obj_loader.h \
+ C:/msys64/mingw64/include/c++/14.2.0/map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/aligned_buffer.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/vector \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/cstring \
- C:/msys64/mingw64/include/string.h \
- C:/msys64/mingw64/include/sec_api/string_s.h \
  C:/msys64/mingw64/include/c++/14.2.0/fstream \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/ios \
@@ -381,18 +398,148 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/utility \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/stb/stb_image.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
- C:/msys64/mingw64/include/stdarg.h \
- C:/msys64/mingw64/include/_mingw_stdarg.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/tinygltf/tiny_gltf.h \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/msys64/mingw64/include/c++/14.2.0/compare \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
+ C:/msys64/mingw64/include/sys/stat.h C:/msys64/mingw64/include/io.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/tinygltf/json.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/iterator \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stream_iterator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/memory \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_raw_storage_iter.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/align.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/allocated_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/concurrence.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_atomic.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_lockfree_defines.h \
+ C:/msys64/mingw64/include/c++/14.2.0/backward/auto_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/numeric \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/forward_list \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/forward_list.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/forward_list.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/valarray \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/valarray_array.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/valarray_array.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/valarray_before.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/slice_array.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/valarray_after.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/gslice.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/gslice_array.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/mask_array.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/indirect_array.h \
+ C:/msys64/mingw64/include/c++/14.2.0/filesystem \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/fs_fwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ratio \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/fs_path.h \
+ C:/msys64/mingw64/include/c++/14.2.0/locale \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/time_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/messages_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_conv.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iomanip \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/quoted_string.h \
+ C:/msys64/mingw64/include/c++/14.2.0/codecvt \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/fs_dir.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/fs_ops.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/tinygltf/stb_image.h \
  C:/msys64/mingw64/include/c++/14.2.0/math.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/tinygltf/stb_image_write.h \
+ C:/msys64/mingw64/include/windows.h \
+ C:/msys64/mingw64/include/sdkddkver.h C:/msys64/mingw64/include/excpt.h \
+ C:/msys64/mingw64/include/windef.h \
+ C:/msys64/mingw64/include/winapifamily.h \
+ C:/msys64/mingw64/include/minwindef.h \
+ C:/msys64/mingw64/include/specstrings.h C:/msys64/mingw64/include/sal.h \
+ C:/msys64/mingw64/include/concurrencysal.h \
+ C:/msys64/mingw64/include/driverspecs.h \
+ C:/msys64/mingw64/include/winnt.h \
+ C:/msys64/mingw64/include/_mingw_unicode.h \
+ C:/msys64/mingw64/include/apiset.h C:/msys64/mingw64/include/basetsd.h \
+ C:/msys64/mingw64/include/guiddef.h C:/msys64/mingw64/include/pshpack4.h \
+ C:/msys64/mingw64/include/poppack.h C:/msys64/mingw64/include/pshpack4.h \
+ C:/msys64/mingw64/include/pshpack2.h C:/msys64/mingw64/include/poppack.h \
+ C:/msys64/mingw64/include/pshpack2.h \
+ C:/msys64/mingw64/include/pshpack8.h \
+ C:/msys64/mingw64/include/pshpack8.h \
+ C:/msys64/mingw64/include/ktmtypes.h C:/msys64/mingw64/include/winbase.h \
+ C:/msys64/mingw64/include/apisetcconv.h \
+ C:/msys64/mingw64/include/minwinbase.h \
+ C:/msys64/mingw64/include/bemapiset.h \
+ C:/msys64/mingw64/include/debugapi.h \
+ C:/msys64/mingw64/include/errhandlingapi.h \
+ C:/msys64/mingw64/include/fibersapi.h \
+ C:/msys64/mingw64/include/fileapi.h \
+ C:/msys64/mingw64/include/handleapi.h \
+ C:/msys64/mingw64/include/heapapi.h C:/msys64/mingw64/include/ioapiset.h \
+ C:/msys64/mingw64/include/interlockedapi.h \
+ C:/msys64/mingw64/include/jobapi.h \
+ C:/msys64/mingw64/include/libloaderapi.h \
+ C:/msys64/mingw64/include/memoryapi.h \
+ C:/msys64/mingw64/include/namedpipeapi.h \
+ C:/msys64/mingw64/include/namespaceapi.h \
+ C:/msys64/mingw64/include/processenv.h \
+ C:/msys64/mingw64/include/processthreadsapi.h \
+ C:/msys64/mingw64/include/processtopologyapi.h \
+ C:/msys64/mingw64/include/profileapi.h \
+ C:/msys64/mingw64/include/realtimeapiset.h \
+ C:/msys64/mingw64/include/securityappcontainer.h \
+ C:/msys64/mingw64/include/securitybaseapi.h \
+ C:/msys64/mingw64/include/synchapi.h \
+ C:/msys64/mingw64/include/sysinfoapi.h \
+ C:/msys64/mingw64/include/systemtopologyapi.h \
+ C:/msys64/mingw64/include/threadpoolapiset.h \
+ C:/msys64/mingw64/include/threadpoollegacyapiset.h \
+ C:/msys64/mingw64/include/utilapiset.h \
+ C:/msys64/mingw64/include/wow64apiset.h \
+ C:/msys64/mingw64/include/winerror.h \
+ C:/msys64/mingw64/include/fltwinerror.h \
+ C:/msys64/mingw64/include/timezoneapi.h \
+ C:/msys64/mingw64/include/wingdi.h C:/msys64/mingw64/include/pshpack1.h \
+ C:/msys64/mingw64/include/winuser.h C:/msys64/mingw64/include/tvout.h \
+ C:/msys64/mingw64/include/winnls.h \
+ C:/msys64/mingw64/include/datetimeapi.h \
+ C:/msys64/mingw64/include/stringapiset.h \
+ C:/msys64/mingw64/include/wincon.h C:/msys64/mingw64/include/winver.h \
+ C:/msys64/mingw64/include/winreg.h C:/msys64/mingw64/include/reason.h \
+ C:/msys64/mingw64/include/winnetwk.h C:/msys64/mingw64/include/wnnc.h \
+ C:/msys64/mingw64/include/virtdisk.h \
+ C:/msys64/mingw64/include/stralign.h \
+ C:/msys64/mingw64/include/sec_api/stralign_s.h \
+ C:/msys64/mingw64/include/winsvc.h C:/msys64/mingw64/include/mcx.h \
+ C:/msys64/mingw64/include/imm.h C:/msys64/mingw64/include/fcntl.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/stdio_filebuf.h \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/util/LoadShaders.h \
+ C:\Users\Harshit\ Pandit\Desktop\graphics-project\src\util/LoadShaders.h \
+ C:\Users\Harshit\ Pandit\Desktop\graphics-project\src\util/CheckError.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/model.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/grid.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/skybox.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/util/CheckError.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/Hut.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/camera.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/Terrain.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/external/GLFW-3~1.2/include/GLFW/glfw3.h \
- C:/msys64/mingw64/include/GL/gl.h
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/robot.h

@@ -14,10 +14,10 @@ class Camera{
 
     GLfloat yawAngle;
 
-    const GLfloat yawSensitivity = 1;
+    const GLfloat yawSensitivity = 2.5;
     const GLfloat speed = 10.0f;
 
-    float32 FoV     = 90;
+    float32 FoV     = 90.0f;
     float32 zNear   = 0.1f;
     float32 zFar    = 1000000.0f;
 

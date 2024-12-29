@@ -1,14 +1,3 @@
-#include <glad/gl.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "util/LoadShaders.h"
-#include "util/CheckError.h"
-
-#include <iostream>
-#include <vector>
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 
 class Skybox{
@@ -304,7 +293,7 @@ class Skybox{
             textureSamplerID = glGetUniformLocation(programID, "textureSampler");
         }
 
-        void render(glm::mat4 cameraMatrix,glm::vec3 cameraPosition) {
+        void render(glm::mat4 cameraMatrix) {
 
             glUseProgram(programID);
 
@@ -322,9 +311,6 @@ class Skybox{
 
 
             glm::mat4 modelMatrix = glm::mat4(1.0f);
-
-            // Make sure that the skybox is always centered around the camera
-            // modelMatrix = glm::translate(modelMatrix, -cameraPosition);
 
             // Scale up the skybox by 100 times
             modelMatrix = glm::scale(modelMatrix, glm::vec3(10000.0f));

@@ -1,18 +1,40 @@
+#include <glad/gl.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <GLFW/glfw3.h>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <obj/obj_loader.h>
+
+#define TINYGLTF_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <tinygltf/tiny_gltf.h>
+
+#include <iostream>
+#include <string>
+#include <vector>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#include "util/LoadShaders.h"
+#include "util/CheckError.h"
+
 #include <headers/model.h>
 #include <headers/grid.h>
 #include <headers/skybox.h>
 #include <headers/Hut.h>
 #include <headers/camera.h>
-#include <headers/Terrain.h>
-
-#include <GLFW/glfw3.h>
+#include <headers/robot.h>
 
 
 static GLFWwindow *window;
 
 Camera *camera;
 
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode){
+static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
     if(key==GLFW_KEY_ESCAPE && action==GLFW_PRESS){
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
@@ -47,9 +69,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 }
 
-
 int main() {
-
     // Initialize the window object
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW." << std::endl;
@@ -70,6 +90,10 @@ int main() {
     }
     glfwMakeContextCurrent(window);
 
+       // Handle input events
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetKeyCallback(window, key_callback);
+
     int version = gladLoadGL(glfwGetProcAddress);
     if (version == 0) {
         std::cerr << "Failed to initialize OpenGL context." << std::endl;
@@ -79,48 +103,33 @@ int main() {
 	glClearColor(0.2f, 0.2f, 0.25f, 0.0f);
 
     glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_CULL_FACE);
-
-    // Handle input events
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    glfwSetKeyCallback(window, key_callback);
+    glDisable(GL_CULL_FACE);
 
     // Now we initialize our objects
     camera = new Camera();
 
-    std::vector<std::string> texture_images = {
-        "../src/assets/models/train/03.jpg",
-        "../src/assets/models/train/AVE.JPG",
-        "../src/assets/models/train/AVEENG.jpg",
-        // "../src/assets/train/AVELEFT.jpg"
-        // "../src/assets/train/AVERIGHT.jpg"
-        // "../src/assets/train/BLANCO.jpg",
-        "../src/assets/models/train/GRIS.jpg",
-        "../src/assets/models/train/LATERAL.jpg",
-        "../src/assets/models/train/RENFE.jpg",
-        "../src/assets/models/train/RENFECIR.jpg",
-        "../src/assets/models/train/V.jpg"
-    };
-
-    // Model maglev("../src/assets/train/AnyConv.com__AVEENG_L.obj");
-    // Model maglev("../src/assets/models/train/AnyConv.com__AVEENG_L.obj", texture_images);
-
-    // Model field("../src/assets/models/field/mount.blend1.obj");
-
     // Skybox sb("../src/assets/skyboxes/skybox1.jpg");
-    // Hut b;
 
-    // Terrain tr("../src/assets/models/terrain/mount.blend1.obj");)
-    Terrain tr(
-        "../src/assets/models/field/mount.blend1.obj",
-        "../src/assets/models/field",
-        "../src/shaders/terrain.vert",
-        "../src/shaders/terrain.frag"
-    );
+    // Robot rb("../src/assets/models/bot.gltf");
+    Robot rb;
 
+    // Grid gd;
+
+    static double lastTime = glfwGetTime();
+    float time = 0.0f;
+    float fTime = 0.0f;
+    unsigned long frames = 0;
 
     do{
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Update animation states
+        double currentTime = glfwGetTime();
+        float deltaTime = float(currentTime - lastTime);
+        lastTime = currentTime;
+
+        time += deltaTime;
+        rb.update(time);
 
         glm::mat4 viewMatrix = camera->getViewMatrix();
         glm::mat4 projectionMatrix = camera->getProjectionMatrix();
@@ -131,13 +140,20 @@ int main() {
 
         glm::mat4 skyBoxVP = projectionMatrix * glm::mat4(glm::mat3(viewMatrix));
 
-        // sb.render(vp, cameraPosition);
-        // b.render(vp);
+        rb.render(vp);
 
-        // field.render(vp);
-        tr.render(vp);
-        // maglev.render(vp);
+        // Frames tracking
+        frames += 1;
+        fTime += deltaTime;
+        if(fTime >= 2.0f){
+            float fps = frames / fTime;
+            fTime = 0.0f;
+            frames = 0;
 
+            std::stringstream sstream;
+            sstream << std::fixed << std::setprecision(2) << "Graphics Project: " << fps << " FPS";
+            glfwSetWindowTitle(window, sstream.str().c_str());
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -1,10 +1,25 @@
-#include <glad/gl.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+const char* grid_vert_shader = R"(
+#version 330 core
 
+layout(location = 0) in vec3 position;
 
-#include <util/LoadShaders.h>
-#include <vector>
+uniform mat4 MVP;
+
+void main() {
+    gl_Position = MVP * vec4(position, 1.0);
+}
+)";
+
+const char* grid_frag_shader = R"(
+#version 330 core
+
+out vec4 color;
+
+void main() {
+    color = vec4(0.5, 0.5, 0.5, 1.0);
+}
+)";
+
 
 class Grid {
     private:
@@ -15,8 +30,7 @@ class Grid {
     public:
         Grid() {
             // Shader initialization
-            shaderProgram = LoadShadersFromFile("../src/shaders/grid.vert", "../src/shaders/grid.frag");
-            // shaderProgram = LoadShadersFromFile("../src/shaders/grid.vert", "../src/shaders/grid.frag");
+            shaderProgram = LoadShadersFromString(grid_vert_shader, grid_frag_shader);
             mvpLocation = glGetUniformLocation(shaderProgram, "MVP");
 
             // Grid data

@@ -1,19 +1,3 @@
-#include <glad/gl.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <obj/obj_loader.h>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
-
-#include <iostream>
-#include <string>
-#include <vector>
-
-#include "util/LoadShaders.h"
-
 
 class Model{
     std::vector<float> vertices;
