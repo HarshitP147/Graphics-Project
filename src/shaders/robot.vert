@@ -31,6 +31,6 @@ void main() {
                         a_weight.w * u_jointMatrix[int(a_joint.w)] ;
 
     // Transform vertex
-    gl_Position = MVP * skinMatrix * vec4(vertexPosition, 1.0);
+    gl_Position = MVP * vec4(vertexPosition, 1.0);
 
 }

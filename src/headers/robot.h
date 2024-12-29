@@ -20,6 +20,11 @@ class Robot {
 	};
 	std::vector<PrimitiveObject> primitiveObjects;
 
+    struct MeshData{
+        std::vector<int> primitiveIndices;
+    };
+    std::vector<MeshData> allMeshData;
+
 	// Skinning
 	struct SkinObject {
 		std::vector<glm::mat4> inverseBindMatrices;
@@ -132,31 +137,49 @@ class Robot {
 
                 assert(skin.joints.size() == accessor.count);
 
-                skinObject.globalJointTransforms.resize(skin.joints.size());
-                skinObject.jointMatrices.resize(skin.joints.size());
+                skinObject.globalJointTransforms.resize(model.nodes.size());
+                skinObject.jointMatrices.resize(model.nodes.size());
+
 
                 // ----------------------------------------------
                 // TODO: your code here to compute joint matrices
                 // ----------------------------------------------
 
-                std::vector<glm::mat4> localNodeTransforms(skin.joints.size());
-
-                glm::mat4 parentTransform(1.0f);
-                std::vector<glm::mat4> globalNodeTransforms(skin.joints.size());
+                std::vector<glm::mat4> localTransforms(model.nodes.size());
+                std::vector<glm::mat4> globalTransforms(model.nodes.size());
 
                 int rootNodeIndex = skin.joints[0];
 
                 // Compute local transforms at each node
-                computeLocalNodeTransform(model, rootNodeIndex, localNodeTransforms);
+                computeLocalNodeTransform(model, rootNodeIndex, localTransforms);
 
                 // Compute global transforms at each node
-                computeGlobalNodeTransform(model, localNodeTransforms, rootNodeIndex, parentTransform, globalNodeTransforms);
-                skinObject.globalJointTransforms = globalNodeTransforms;
+                computeGlobalNodeTransform(model, localTransforms, rootNodeIndex, glm::mat4(1.0f), globalTransforms);
 
-                for (size_t j = 0; j < skinObject.globalJointTransforms.size(); ++j) {
+                for(size_t j=0; j<skinObject.globalJointTransforms.size(); j++){
                     int jointNodeIndex = skin.joints[j];
-                    skinObject.jointMatrices[j] = skinObject.globalJointTransforms[jointNodeIndex] * skinObject.inverseBindMatrices[j];
+                    skinObject.jointMatrices[j] = globalTransforms[jointNodeIndex] * skinObject.inverseBindMatrices[j];
                 }
+
+                // std::vector<glm::mat4> localNodeTransforms(model.nodes.size());
+
+                // glm::mat4 parentTransform(1.0f);
+                // std::vector<glm::mat4> globalNodeTransforms(model.nodes.size());
+
+
+                // int rootNodeIndex = skin.joints[0];
+
+                // // Compute local transforms at each node
+                // computeLocalNodeTransform(model, rootNodeIndex, localNodeTransforms);
+
+                // // Compute global transforms at each node
+                // computeGlobalNodeTransform(model, localNodeTransforms, rootNodeIndex, parentTransform, globalNodeTransforms);
+                // // skinObject.globalJointTransforms = globalNodeTransforms;
+
+                // for (size_t j = 0; j < skinObject.globalJointTransforms.size(); ++j) {
+                //     int jointNodeIndex = skin.joints[j];
+                //     skinObject.jointMatrices[j] = [jointNodeIndex] * skinObject.inverseBindMatrices[j];
+                // }
 
                 // ----------------------------------------------
 
@@ -165,28 +188,144 @@ class Robot {
             return skinObjects;
         }
 
-        int findKeyframeIndex(const std::vector<float>& times, float animationTime)
+
+        // Called once after model is loaded
+        void bindModel(tinygltf::Model &model)
         {
-            int left = 0;
-            int right = times.size() - 1;
+            // Ensure we have a MeshData entry for each mesh in the model
+            allMeshData.resize(model.meshes.size());
 
-            while (left <= right) {
-                int mid = (left + right) / 2;
+            // For each root node in the default scene, recursively bind
+            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
+            for (int rootNodeIndex : scene.nodes) {
+                bindModelNodes(model, rootNodeIndex);
+            }
+        }
 
-                if (mid + 1 < times.size() && times[mid] <= animationTime && animationTime < times[mid + 1]) {
-                    return mid;
-                }
-                else if (times[mid] > animationTime) {
-                    right = mid - 1;
-                }
-                else { // animationTime >= times[mid + 1]
-                    left = mid + 1;
-                }
+        // Recursively process a node and its children
+        void bindModelNodes(tinygltf::Model &model, int nodeIndex)
+        {
+            const tinygltf::Node &node = model.nodes[nodeIndex];
+
+            // If this node references a mesh, bind it
+            if (node.mesh >= 0 && node.mesh < (int)model.meshes.size()) {
+                bindMesh(model, node.mesh);
             }
 
-            // Target not found
-            return times.size() - 2;
+            // Then recurse for children
+            for (int childIndex : node.children) {
+                bindModelNodes(model, childIndex);
+            }
         }
+
+        void bindMesh(tinygltf::Model &model, int meshIndex){
+            // Retrieve the glTF mesh
+            tinygltf::Mesh &mesh = model.meshes[meshIndex];
+            // Reference to the MeshData entry for this mesh
+            MeshData &meshData = allMeshData[meshIndex];
+
+            // First, prepare all VBOs for this entire model if you haven't yet
+            // (Sometimes you'd do this once per BufferView, as you did before.)
+            // But let's assume it's done outside, or we do it inline here.
+
+            // For each primitive in this mesh:
+            size_t startIndex = primitiveObjects.size();
+            // We'll append new PrimitiveObjects to globalPrimitives
+
+            for (size_t p = 0; p < mesh.primitives.size(); p++) {
+                const tinygltf::Primitive &primitive = mesh.primitives[p];
+
+                // 1. Create a new VAO
+                GLuint vao;
+                glGenVertexArrays(1, &vao);
+                glBindVertexArray(vao);
+
+                // 2. Prepare any needed VBOs (positions, normals, etc.) –
+                //    if you’ve already created them in a separate pass, just bind them here
+                std::map<int, GLuint> vbos;
+
+                // For each attribute in the primitive
+                for (auto &attrib : primitive.attributes) {
+                    int accessorIndex = attrib.second;
+                    const tinygltf::Accessor &accessor = model.accessors[accessorIndex];
+                    const tinygltf::BufferView &bv = model.bufferViews[accessor.bufferView];
+                    const tinygltf::Buffer &buf = model.buffers[bv.buffer];
+
+                    // If you haven't created a VBO for this bufferView yet, do so:
+                    if (vbos.find(accessor.bufferView) == vbos.end()) {
+                        GLuint vbo;
+                        glGenBuffers(1, &vbo);
+                        glBindBuffer(bv.target, vbo);
+                        glBufferData(bv.target, bv.byteLength,
+                                    &buf.data[bv.byteOffset], GL_STATIC_DRAW);
+                        vbos[accessor.bufferView] = vbo;
+                    } else {
+                        // If we already have a VBO for this bufferView, just bind it
+                        glBindBuffer(bv.target, vbos[accessor.bufferView]);
+                    }
+
+                    // Now set up glVertexAttribPointer
+                    int byteStride = accessor.ByteStride(bv);
+                    int size = 1;
+                    if (accessor.type != TINYGLTF_TYPE_SCALAR) {
+                        size = accessor.type; // e.g. VEC3 => size=3, VEC2 => size=2, etc.
+                    }
+                    int location = -1;
+                    if (attrib.first == "POSITION")  location = 0;
+                    if (attrib.first == "NORMAL")    location = 1;
+                    if (attrib.first == "TEXCOORD_0")location = 2;
+                    if (attrib.first == "JOINTS_0")  location = 3;
+                    if (attrib.first == "WEIGHTS_0") location = 4;
+
+                    if (location >= 0) {
+                        glEnableVertexAttribArray(location);
+                        glVertexAttribPointer(location,
+                                            size,
+                                            accessor.componentType,
+                                            accessor.normalized ? GL_TRUE : GL_FALSE,
+                                            byteStride,
+                                            (void*)(uintptr_t)accessor.byteOffset);
+                    }
+                }
+
+                // Also bind the index buffer (ELEMENT_ARRAY_BUFFER)
+                {
+                    const tinygltf::Accessor &indexAccessor = model.accessors[primitive.indices];
+                    const tinygltf::BufferView &ibv = model.bufferViews[indexAccessor.bufferView];
+                    const tinygltf::Buffer &ibuf = model.buffers[ibv.buffer];
+
+                    if (vbos.find(indexAccessor.bufferView) == vbos.end()) {
+                        GLuint ibo;
+                        glGenBuffers(1, &ibo);
+                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+                        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                                    ibv.byteLength,
+                                    &ibuf.data[ibv.byteOffset],
+                                    GL_STATIC_DRAW);
+                        vbos[indexAccessor.bufferView] = ibo;
+                    } else {
+                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[indexAccessor.bufferView]);
+                    }
+                }
+
+                glBindVertexArray(0);
+
+                // 3. Add a new entry in globalPrimitives
+                PrimitiveObject primObj;
+                primObj.vertexArrayObject = vao;
+                primObj.vertexBufferObjects = vbos;
+
+                primitiveObjects.push_back(primObj);
+            }
+
+            // Now record which globalPrimitives indices belong to this mesh:
+            for (size_t p = 0; p < mesh.primitives.size(); p++) {
+                // The newly pushed-back primitives start at startIndex
+                meshData.primitiveIndices.push_back((int)(startIndex + p));
+            }
+        }
+
+
 
         std::vector<AnimationObject> prepareAnimation(const tinygltf::Model &model)
         {
@@ -250,6 +389,84 @@ class Robot {
             return animationObjects;
         }
 
+        void drawMesh(const tinygltf::Model &model, int meshIndex){
+            const tinygltf::Mesh &mesh = model.meshes[meshIndex];
+
+            // Retrieve the list of global primitive indices for this mesh
+            const std::vector<int> &primIndices = allMeshData[meshIndex].primitiveIndices;
+
+            for (size_t p = 0; p < mesh.primitives.size(); p++) {
+                int primID = primIndices[p]; // index into globalPrimitives
+                const PrimitiveObject &primObj = primitiveObjects[primID];
+
+                // Bind the VAO
+                glBindVertexArray(primObj.vertexArrayObject);
+
+                // Get the index accessor
+                const tinygltf::Primitive &primitive = mesh.primitives[p];
+                const tinygltf::Accessor &indexAccessor = model.accessors[primitive.indices];
+
+                // We already stored the IBO in primObj.vertexBufferObjects, so just ensure it's bound:
+                GLuint ibo = primObj.vertexBufferObjects.at(indexAccessor.bufferView);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+                // Draw
+                glDrawElements(primitive.mode,
+                            indexAccessor.count,
+                            indexAccessor.componentType,
+                            (void*)(uintptr_t)indexAccessor.byteOffset);
+
+                glBindVertexArray(0);
+             }
+        }
+
+        void drawModelNodes(const tinygltf::Model &model, int nodeIndex){
+            const tinygltf::Node &node = model.nodes[nodeIndex];
+
+            // If this node references a mesh, draw it
+            if (node.mesh >= 0 && node.mesh < (int)model.meshes.size()) {
+                drawMesh(model, node.mesh);
+            }
+
+            // Recurse on children
+            for (int childIndex : node.children) {
+                drawModelNodes(model, childIndex);
+            }
+        }
+
+        void drawModel(const tinygltf::Model &model){
+            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
+
+            // For each root node in the scene
+            for (int rootNodeIndex : scene.nodes) {
+                drawModelNodes(model, rootNodeIndex);
+            }
+        }
+
+
+        int findKeyframeIndex(const std::vector<float>& times, float animationTime)
+        {
+            int left = 0;
+            int right = times.size() - 1;
+
+            while (left <= right) {
+                int mid = (left + right) / 2;
+
+                if (mid + 1 < times.size() && times[mid] <= animationTime && animationTime < times[mid + 1]) {
+                    return mid;
+                }
+                else if (times[mid] > animationTime) {
+                    right = mid - 1;
+                }
+                else { // animationTime >= times[mid + 1]
+                    left = mid + 1;
+                }
+            }
+
+            // Target not found
+            return times.size() - 2;
+        }
+
         void updateAnimation(
             const tinygltf::Model &model,
             const tinygltf::Animation &anim,
@@ -272,22 +489,17 @@ class Robot {
                 const std::vector<float> &times = animationObject.samplers[channel.sampler].input;
                 float animationTime = fmod(time, times.back());
 
-                // ----------------------------------------------------------
-                // TODO: Find a keyframe for getting animation data
-                // ----------------------------------------------------------
                 int keyframeIndex = this->findKeyframeIndex(times, animationTime);
 
                 const unsigned char *outputPtr = &outputBuffer.data[outputBufferView.byteOffset + outputAccessor.byteOffset];
                 const float *outputBuf = reinterpret_cast<const float*>(outputPtr);
 
-                // -----------------------------------------------------------
-                // TODO: Add interpolation for smooth animation
-                // -----------------------------------------------------------
 
                 float t0 = times[keyframeIndex];
                 float t1 = times[keyframeIndex+1];
 
-                float factor = (animationTime-t1)/(t0-t1);
+                // float factor = (animationTime-t1)/(t0-t1);
+                float factor = (animationTime  - t1)/ (t1 - t0);
 
 
                 if (channel.target_path == "translation") {
@@ -295,7 +507,6 @@ class Robot {
                     memcpy(&translation0, outputPtr + keyframeIndex * 3 * sizeof(float), 3 * sizeof(float));
                     memcpy(&translation1, outputPtr + (keyframeIndex+1) * 3 * sizeof(float), 3 * sizeof(float));
 
-                    // glm::vec3 translation = glm::mix(translation0,translation1,factor);
                     glm::vec3 translation;
                     if(sampler.interpolation=="STEP"){
                         translation = translation1;
@@ -308,7 +519,6 @@ class Robot {
                     memcpy(&rotation0, outputPtr + keyframeIndex * 4 * sizeof(float), 4 * sizeof(float));
                     memcpy(&rotation1, outputPtr + (keyframeIndex+1) * 4 * sizeof(float), 4 * sizeof(float));
 
-                    // glm::quat rotation = rotation0;
                     glm::quat rotation;
                     if(sampler.interpolation=="STEP"){
                         rotation = rotation1;
@@ -321,7 +531,6 @@ class Robot {
                     memcpy(&scale0, outputPtr + keyframeIndex * 3 * sizeof(float), 3 * sizeof(float));
                     memcpy(&scale1, outputPtr + (keyframeIndex+1) * 3 * sizeof(float), 3 * sizeof(float));
 
-                    // glm::vec3 scale = glm::mix(scale0,scale1,factor);
                     glm::vec3 scale;
                     if(sampler.interpolation=="STEP"){
                         scale = scale1;
@@ -334,165 +543,25 @@ class Robot {
         }
 
         void updateSkinning(const std::vector<glm::mat4> &nodeTransforms) {
+            std::vector<glm::mat4> globalAllNodes(model.nodes.size(), glm::mat4(1.0f));
 
-            // -------------------------------------------------
-            // TODO: Recompute joint matrices
-            // -------------------------------------------------
-            for(size_t i=0; i<skinObjects.size(); i++){
+            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
+            for (int rootNodeIndex : scene.nodes){
+                computeGlobalNodeTransform(model, nodeTransforms, rootNodeIndex, glm::mat4(1.0f), globalAllNodes);
+            }
+
+            for (size_t i=0; i<skinObjects.size(); i++){
                 SkinObject &skinObject = skinObjects[i];
-                for(size_t j=0; j<skinObject.jointMatrices.size(); j++){
-                    int jointIndex = model.skins[i].joints[j];
-                    glm::mat4 globalTransform = nodeTransforms[jointIndex];
-                    skinObject.jointMatrices[j] = globalTransform * skinObject.inverseBindMatrices[j];
+
+                const tinygltf::Skin &skin = model.skins[i];
+
+                for(size_t j=0; j<skin.joints.size(); j++){
+                    int jointNodeIndex = skin.joints[j];
+
+                    skinObject.jointMatrices[j] = globalAllNodes[jointNodeIndex] * skinObject.inverseBindMatrices[j];
                 }
             }
 
-            // Upload to shader
-            for(size_t i=0; i<skinObjects.size(); i++){
-                if(!skinObjects[i].jointMatrices.empty()){
-                    glUniformMatrix4fv(jointMatricesID, skinObjects[i].jointMatrices.size(), GL_FALSE, glm::value_ptr(skinObjects[i].jointMatrices[0]));
-                }
-            }
-        }
-
-        void drawMesh(const std::vector<PrimitiveObject> &primitiveObjects,
-				tinygltf::Model &model, tinygltf::Mesh &mesh) {
-
-            for (size_t i = 0; i < mesh.primitives.size(); ++i)
-            {
-                GLuint vertexArrayObject = primitiveObjects[i].vertexArrayObject;
-                std::map<int, GLuint> vbos = primitiveObjects[i].vertexBufferObjects;
-
-                glBindVertexArray(vertexArrayObject);
-
-                tinygltf::Primitive primitive = mesh.primitives[i];
-                tinygltf::Accessor indexAccessor = model.accessors[primitive.indices];
-
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos.at(indexAccessor.bufferView));
-
-                glDrawElements(primitive.mode, indexAccessor.count,
-                            indexAccessor.componentType,
-                            BUFFER_OFFSET(indexAccessor.byteOffset));
-
-                glBindVertexArray(0);
-            }
-        }
-
-        void drawModelNodes(const std::vector<PrimitiveObject>& primitiveObjects,
-                            tinygltf::Model &model, tinygltf::Node &node) {
-            // Draw the mesh at the node, and recursively do so for children nodes
-            if ((node.mesh >= 0) && (node.mesh < model.meshes.size())) {
-                drawMesh(primitiveObjects, model, model.meshes[node.mesh]);
-            }
-            for (size_t i = 0; i < node.children.size(); i++) {
-                drawModelNodes(primitiveObjects, model, model.nodes[node.children[i]]);
-            }
-        }
-        void drawModel(const std::vector<PrimitiveObject>& primitiveObjects,
-                    tinygltf::Model &model) {
-            // Draw all nodes
-            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
-            for (size_t i = 0; i < scene.nodes.size(); ++i) {
-                drawModelNodes(primitiveObjects, model, model.nodes[scene.nodes[i]]);
-            }
-        }
-
-        void bindMesh(std::vector<PrimitiveObject> &primitiveObjects,
-				tinygltf::Model &model, tinygltf::Mesh &mesh) {
-
-            std::map<int, GLuint> vbos;
-            for (size_t i = 0; i < model.bufferViews.size(); ++i) {
-                const tinygltf::BufferView &bufferView = model.bufferViews[i];
-
-                int target = bufferView.target;
-
-                if (bufferView.target == 0) {
-                    continue;
-                }
-
-                const tinygltf::Buffer &buffer = model.buffers[bufferView.buffer];
-                GLuint vbo;
-                glGenBuffers(1, &vbo);
-                glBindBuffer(target, vbo);
-                glBufferData(target, bufferView.byteLength,
-                            &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
-
-                vbos[i] = vbo;
-            }
-
-            // Each mesh can contain several primitives (or parts), each we need to
-            // bind to an OpenGL vertex array object
-            for (size_t i = 0; i < mesh.primitives.size(); ++i) {
-
-                tinygltf::Primitive primitive = mesh.primitives[i];
-                tinygltf::Accessor indexAccessor = model.accessors[primitive.indices];
-
-                GLuint vertexArrayObject;
-                glGenVertexArrays(1, &vertexArrayObject);
-                glBindVertexArray(vertexArrayObject);
-
-                for (auto &attrib : primitive.attributes) {
-                    tinygltf::Accessor accessor = model.accessors[attrib.second];
-                    int byteStride =
-                        accessor.ByteStride(model.bufferViews[accessor.bufferView]);
-                    glBindBuffer(GL_ARRAY_BUFFER, vbos[accessor.bufferView]);
-
-                    int size = 1;
-                    if (accessor.type != TINYGLTF_TYPE_SCALAR) {
-                        size = accessor.type;
-                    }
-
-                    int vaa = -1;
-                    if (attrib.first.compare("POSITION") == 0) vaa = 0;
-                    if (attrib.first.compare("NORMAL") == 0) vaa = 1;
-                    if (attrib.first.compare("TEXCOORD_0") == 0) vaa = 2;
-                    if (attrib.first.compare("JOINTS_0") == 0) vaa = 3;
-                    if (attrib.first.compare("WEIGHTS_0") == 0) vaa = 4;
-                    if (vaa > -1) {
-                        glEnableVertexAttribArray(vaa);
-                        glVertexAttribPointer(vaa, size, accessor.componentType,
-                                            accessor.normalized ? GL_TRUE : GL_FALSE,
-                                            byteStride, BUFFER_OFFSET(accessor.byteOffset));
-                    } else {
-                        std::cout << "vaa missing: " << attrib.first << std::endl;
-                    }
-                }
-
-                // Record VAO for later use
-                PrimitiveObject primitiveObject;
-                primitiveObject.vertexArrayObject = vertexArrayObject;
-                primitiveObject.vertexBufferObjects = vbos;
-                primitiveObjects.push_back(primitiveObject);
-
-                glBindVertexArray(0);
-            }
-        }
-
-        void bindModelNodes(std::vector<PrimitiveObject> &primitiveObjects,
-                            tinygltf::Model &model,
-                            tinygltf::Node &node) {
-            // Bind buffers for the current mesh at the node
-            if ((node.mesh >= 0) && (node.mesh < model.meshes.size())) {
-                bindMesh(primitiveObjects, model, model.meshes[node.mesh]);
-            }
-
-            // Recursive into children nodes
-            for (size_t i = 0; i < node.children.size(); i++) {
-                assert((node.children[i] >= 0) && (node.children[i] < model.nodes.size()));
-                bindModelNodes(primitiveObjects, model, model.nodes[node.children[i]]);
-            }
-        }
-
-        std::vector<PrimitiveObject> bindModel(tinygltf::Model &model) {
-            std::vector<PrimitiveObject> primitiveObjects;
-
-            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
-            for (size_t i = 0; i < scene.nodes.size(); ++i) {
-                assert((scene.nodes[i] >= 0) && (scene.nodes[i] < model.nodes.size()));
-                bindModelNodes(primitiveObjects, model, model.nodes[scene.nodes[i]]);
-            }
-
-            return primitiveObjects;
         }
 
         bool loadModel(tinygltf::Model &model, const char *filename) {
@@ -501,6 +570,7 @@ class Robot {
             std::string warn;
 
             bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filename);
+
             if (!warn.empty()) {
                 std::cout << "WARN: " << warn << std::endl;
             }
@@ -514,65 +584,24 @@ class Robot {
             else
                 std::cout << "Loaded glTF: " << filename << std::endl;
 
-            CheckOpenGLErrors("Loading models");
 
             return res;
         }
 
-        std::vector<GLuint> loadGLTFTextures(const tinygltf::Model &model){
-            std::vector<GLuint> textureIDs;
-
-            for(auto &tex: model.textures){
-                if (tex.source < 0 || tex.source >= model.images.size()) {
-                    continue;
-                }
-
-                const auto &img = model.images[tex.source];
-
-                GLuint textureID;
-                glGenTextures(1, &textureID);
-                glBindTexture(GL_TEXTURE_2D, textureID);
-
-                GLenum format = GL_RGB;
-                if(img.component == 4) format = GL_RGBA;
-
-                glTexImage2D(GL_TEXTURE_2D, 0, format, img.width, img.height, 0, format, GL_UNSIGNED_BYTE, img.image.data());
-                glGenerateMipmap(GL_TEXTURE_2D);
-
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-                textureIDs.push_back(textureID);
-            }
-
-            return textureIDs;
-        }
-
         void initialize() {
             // Modify your path if needed
-            // if(!loadModel(model, "../src/assets/models/bot.gltf")){
-            //     return;
-            // }
-            if(!loadModel(model, "../src/assets/models/stormtrooper/scene.gltf")){
+            if(!loadModel(model, "../src/assets/models/bot/waving.gltf")){
                 return;
             }
 
-
-            CheckOpenGLErrors("Loading model");
-
             // Prepare buffers for rendering
-            primitiveObjects = bindModel(model);
+            bindModel(model);
 
             // Prepare joint matrices
             skinObjects = prepareSkinning(model);
 
             // Prepare animation data
             animationObjects = prepareAnimation(model);
-
-            // Load textures
-            textureIDs = loadGLTFTextures(model);
 
 
             CheckOpenGLErrors("Loading model buffers");
@@ -596,66 +625,52 @@ class Robot {
         }
 
     public:
-
         Robot(){
             initialize();
         }
 
         void update(float time) {
-            // return;
-            // -------------------------------------------------
-            // TODO: your code here
-            // -------------------------------------------------
-            if(model.animations.size() > 0){
-                const tinygltf::Animation &animation = model.animations[0];
-                const AnimationObject &animationObject = animationObjects[0];
-
-                const tinygltf::Skin &skin = model.skins[0];
-                std::vector<glm::mat4> nodeTransforms(skin.joints.size());
-                for(size_t i=0;i<nodeTransforms.size();i++){
-                    nodeTransforms[i] = glm::mat4(1.0);
-                }
-
-                updateAnimation(model, animation, animationObject, time, nodeTransforms);
-
-                // Recomputing joint global and local transforms
-                std::vector<glm::mat4> globalNodeTransforms(skin.joints.size(), glm::mat4(1.0f));
-
-                int rootNode = skin.joints[0];
-
-                // computeGlobalNodeTransform(model, nodeTransforms, rootNode, glm::mat4(1.0f), &skinObjects[0].globalJointTransforms);
-
+            if(model.animations.empty()){
+                return;
             }
+
+            const tinygltf::Animation &anim = model.animations[0];
+            const AnimationObject &animationObject = animationObjects[0];
+
+            std::vector<glm::mat4> localTransforms(model.nodes.size());
+            for(size_t i=0; i<model.nodes.size(); i++){
+                localTransforms[i] = glm::mat4(1.0);
+                localTransforms[i] = getNodeTransform(model.nodes[i]);
+            }
+
+            updateAnimation(model, anim, animationObject, time, localTransforms);
+
+            // std::vector<glm::mat4> globalTransforms(model.nodes.size(), glm::mat4(1.0f));
+
+            updateSkinning(localTransforms);
         }
 
 	    void render(glm::mat4 cameraMatrix) {
             glUseProgram(programID);
 
+            // Set model matrix
+            glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+            // Scale the model
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0f));
+
             // Set camera
-            glm::mat4 mvp = cameraMatrix;
+            glm::mat4 mvp = cameraMatrix * modelMatrix;
             glUniformMatrix4fv(mvpMatrixID, 1, GL_FALSE, &mvp[0][0]);
 
             CheckOpenGLErrors("Setting camera");
 
-            // -----------------------------------------------------------------
-            // TODO: Set animation data for linear blend skinning in shader
-            // -----------------------------------------------------------------
-
             // First we set the joint matrices
             for(size_t i=0; i<skinObjects.size(); i++){
-                // if(!skinObjects[i].jointMatrices.empty()){
-                // }
                 glUniformMatrix4fv(jointMatricesID, skinObjects[i].jointMatrices.size(), GL_FALSE, glm::value_ptr(skinObjects[i].jointMatrices[0]));
             }
 
             CheckOpenGLErrors("Animation data setup");
-
-            // Bind the first texture sampler
-            if(!textureIDs.empty()){
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, textureIDs[0]);
-                glUniform1i(glGetUniformLocation(programID, "textureSampler"), 0);
-            }
 
             // -----------------------------------------------------------------
 
@@ -663,14 +678,9 @@ class Robot {
             glUniform3fv(lightPositionID, 1, &glm::vec3(-275.0f, 500.0f, 800.0)[0]);
             glUniform3fv(lightIntensityID, 1, &glm::vec3(5e6, 5e6, 5e6)[0]);
 
-            CheckOpenGLErrors("Setting light");
-
-
-
-
             // Draw the GLTF model
-            drawModel(primitiveObjects, model);
-	    }
+            drawModel(model);
+        }
 
         void cleanup() {
             glDeleteProgram(programID);

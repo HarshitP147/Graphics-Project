@@ -43,7 +43,7 @@ static glm::vec3 lightPosition(-275.0f, 500.0f, 800.0f);
 static bool playAnimation = true;
 static float playbackSpeed = 2.0f;
 
-struct Robot {
+struct MyBot {
 	// Shader variable IDs
 	GLuint mvpMatrixID;
 	GLuint jointMatricesID;
@@ -74,19 +74,19 @@ struct Robot {
 	std::vector<SkinObject> skinObjects;
 
 	// Animation
-	struct AnimationSamplerObject {
+	struct SamplerObject {
 		std::vector<float> input;
 		std::vector<glm::vec4> output;
 		int interpolation;
 	};
-	struct AnimationChannelObject {
+	struct ChannelObject {
 		int sampler;
 		std::string targetPath;
 		int targetNode;
 	};
 	struct AnimationObject {
-		std::vector<AnimationSamplerObject> samplers;	// Animation data
-		std::vector<AnimationChannelObject> channels;	// Animation channels
+		std::vector<SamplerObject> samplers;	// Animation data
+		std::vector<ChannelObject> channels;	// Animation channels
 	};
 	std::vector<AnimationObject> animationObjects;
 
@@ -239,7 +239,7 @@ struct Robot {
 			AnimationObject animationObject;
 
 			for (const auto &sampler : anim.samplers) {
-				AnimationSamplerObject samplerObject;
+				SamplerObject samplerObject;
 
 				const tinygltf::Accessor &inputAccessor = model.accessors[sampler.input];
 				const tinygltf::BufferView &inputBufferView = model.bufferViews[inputAccessor.bufferView];
@@ -382,29 +382,34 @@ struct Robot {
 		// -------------------------------------------------
 		// TODO: Recompute joint matrices
 		// -------------------------------------------------
+
 		for(size_t i=0; i<skinObjects.size(); i++){
-			SkinObject &skinObject = skinObjects[i];
-			for(size_t j=0; j<skinObject.jointMatrices.size(); j++){
-				int jointIndex = model.skins[i].joints[j];
-				glm::mat4 globalTransform = nodeTransforms[jointIndex];
-				skinObject.jointMatrices[j] = globalTransform * skinObject.inverseBindMatrices[j];
+			const tinygltf::Skin &skin = model.skins[i];
+
+			std::vector<glm::mat4> globalNodeTransforms(skin.joints.size());
+
+			int rootNodeIndex = skin.joints[0];
+
+			// Compute the global transforms because the local transforms have been updated already
+			computeGlobalNodeTransform(model, nodeTransforms, rootNodeIndex, glm::mat4(1.0f), globalNodeTransforms);
+			skinObjects[i].globalJointTransforms = globalNodeTransforms;
+
+
+			for(size_t j=0; j< skinObjects[i].jointMatrices.size(); j++){
+				int jointIndex = skin.joints[j];
+				skinObjects[i].jointMatrices[j] = skinObjects[i].globalJointTransforms[jointIndex] * skinObjects[i].inverseBindMatrices[j];
 			}
 		}
 
-		// Upload to shader
-		for(size_t i=0; i<skinObjects.size(); i++){
-			if(!skinObjects[i].jointMatrices.empty()){
-				glUniformMatrix4fv(jointMatricesID, skinObjects[i].jointMatrices.size(), GL_FALSE, glm::value_ptr(skinObjects[i].jointMatrices[0]));
-			}
-		}
 	}
 
 	void update(float time) {
-		// return;
 		// -------------------------------------------------
 		// TODO: your code here
 		// -------------------------------------------------
 		if(model.animations.size() > 0){
+			// Iterate through all animations
+
 			const tinygltf::Animation &animation = model.animations[0];
 			const AnimationObject &animationObject = animationObjects[0];
 
@@ -416,12 +421,27 @@ struct Robot {
 
 			updateAnimation(model, animation, animationObject, time, nodeTransforms);
 
-			// Recomputing joint global and local transforms
-			std::vector<glm::mat4> globalNodeTransforms(skin.joints.size(), glm::mat4(1.0f));
 
-			int rootNode = skin.joints[0];
+			updateSkinning(nodeTransforms);
 
-			// computeGlobalNodeTransform(model, nodeTransforms, rootNode, glm::mat4(1.0f), &skinObjects[0].globalJointTransforms);
+
+			// const tinygltf::Animation &animation = model.animations[0];
+			// const AnimationObject &animationObject = animationObjects[0];
+
+			// const tinygltf::Skin &skin = model.skins[0];
+			// std::vector<glm::mat4> nodeTransforms(skin.joints.size());
+			// for(size_t i=0;i<nodeTransforms.size();i++){
+			// 	nodeTransforms[i] = glm::mat4(1.0);
+			// }
+
+			// updateAnimation(model, animation, animationObject, time, nodeTransforms);
+
+			// // Recomputing joint global and local transforms
+			// std::vector<glm::mat4> globalNodeTransforms(skin.joints.size(), glm::mat4(1.0f));
+
+			// int rootNode = skin.joints[0];
+
+			// // computeGlobalNodeTransform(model, nodeTransforms, rootNode, glm::mat4(1.0f), &skinObjects[0].globalJointTransforms);
 
 		}
 	}
@@ -693,7 +713,7 @@ int main(void)
 	// glEnable(GL_CULL_FACE);
 
 	// Our 3D character
-	Robot bot;
+	MyBot bot;
 	bot.initialize();
 
 	// Camera setup

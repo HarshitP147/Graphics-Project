@@ -108,12 +108,11 @@ int main() {
     // Now we initialize our objects
     camera = new Camera();
 
-    // Skybox sb("../src/assets/skyboxes/skybox1.jpg");
+    Skybox sb("../src/assets/skyboxes/skybox1.jpg");
 
-    // Robot rb("../src/assets/models/bot.gltf");
     Robot rb;
 
-    // Grid gd;
+    Grid gd;
 
     static double lastTime = glfwGetTime();
     float time = 0.0f;
@@ -140,6 +139,9 @@ int main() {
 
         glm::mat4 skyBoxVP = projectionMatrix * glm::mat4(glm::mat3(viewMatrix));
 
+        sb.render(skyBoxVP);
+
+        gd.render(vp);
         rb.render(vp);
 
         // Frames tracking

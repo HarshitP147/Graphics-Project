@@ -24,7 +24,4 @@ void main()
 	// Gamma correction
 	finalColor = pow(v, vec3(1.0 / 2.2));
 
-	// Texture
-	finalColor *= texture(textureSampler, uv).rgb;
-
 }
