@@ -171,43 +171,43 @@ class Skybox{
         };
 
     GLfloat uv_buffer_data[72] = {
+        // -Z
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
 
-            // Back (-Z) - Third square from the left on the bottom row
-            3.0f / 4.0f, 1.0f / 3.0f, // Top-left
-            1.0f, 1.0f / 3.0f,        // Top-right
-            1.0f, 2.0f / 3.0f,        // Bottom-right
-            3.0f / 4.0f, 2.0f / 3.0f, // Bottom-left
+        // +Z
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
 
-            // Front (+Z)
-            2.0f / 4.0f, 2.0f / 3.0f, // Top-right
-            1.0f / 4.0f, 2.0f / 3.0f, // Bottom-right
-            1.0f / 4.0f, 1.0f / 3.0f, // Bottom-left
-            2.0f / 4.0f, 1.0f / 3.0f, // Top-left
+        // +X
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
 
-            // Left (+X)
-            1.0f / 4.0f, 2.0f / 3.0f, // Top right
-            0.0f, 2.0f / 3.0f,        // top left
-            0.0f, 1.0f / 3.0f,        // bottom left
-            1.0f / 4.0f, 1.0f / 3.0f, // bottom right
+        // -X
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
 
-            // Right (-X) - Fourth square from the left on the bottom row
-            3.0f / 4.0f, 1.0f / 3.0f, // Top-right
-            3.0f / 4.0f, 2.0f / 3.0f, // Bottom-right
-            2.0f / 4.0f, 2.0f / 3.0f, // Bottom-left
-            2.0f / 4.0f, 1.0f / 3.0f, // Top-left
+        // +Y
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
 
-            // Top (+Y)
-            2.0f / 4.0f, 0.0f,        // Top-right
-            2.0f / 4.0f, 1.0f / 3.0f, // Bottom-right
-            1.0f / 4.0f, 1.0f / 3.0f, // Bottom-left
-            1.0f / 4.0f, 0.0f,        // Top-left
+        // -Y
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
 
-            // Bottom (-Y)
-            2.0f / 4.0f, 2.0f / 3.0f, // Top-right
-            2.0f / 4.0f, 1.0f,        // Bottom-right
-            1.0f / 4.0f, 1.0f,        // Bottom-left
-            1.0f / 4.0f, 2.0f / 3.0f, // Top-left
-        };
+    };
 
     // OpenGL buffers
     GLuint vertexArrayID;
@@ -215,7 +215,7 @@ class Skybox{
     GLuint indexBufferID;
     GLuint colorBufferID;
     GLuint uvBufferID;
-    GLuint textureID;
+    std::vector<GLuint> textureIDs;
 
     // Shader variable IDs
     GLuint mvpMatrixID;
@@ -250,7 +250,7 @@ class Skybox{
         }
 
     public:
-        Skybox(const char *texturePath){
+        Skybox(){
             // Initialize the variables and the skybox
 
             // Create a vertex array object
@@ -287,7 +287,19 @@ class Skybox{
             mvpMatrixID = glGetUniformLocation(programID, "MVP");
 
             // Load the texture
-            textureID = LoadTextureTileBox(texturePath);
+            std::vector<std::string> faces = {
+                "../src/assets/skybox/pz.jpg",
+                "../src/assets/skybox/nz.jpg",
+                "../src/assets/skybox/px.jpg",
+                "../src/assets/skybox/nx.jpg",
+                "../src/assets/skybox/py.jpg",
+                "../src/assets/skybox/ny.jpg",
+            };
+
+            // textureID = LoadSkyboxTexture(faces)
+            for(int i=0; i<faces.size(); i++){
+                textureIDs.push_back(LoadTextureTileBox(faces[i].c_str()));
+            }
 
             // Get a handle to texture sampler
             textureSamplerID = glGetUniformLocation(programID, "textureSampler");
@@ -330,19 +342,28 @@ class Skybox{
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
             // Bind the texture
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, textureID);
-            glUniform1i(textureSamplerID, 1);
+            for(int i=0; i<textureIDs.size(); i++){
+                glActiveTexture(GL_TEXTURE0 + i);
+                glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
+                glUniform1i(textureSamplerID, i);
 
-            // Draw the box
-            glDepthMask(GL_FALSE);
-            glDrawElements(
-                GL_TRIANGLES,    // mode
-                36,              // number of indices
-                GL_UNSIGNED_INT, // type
-                (void *)0        // element array buffer offset
-            );
-            glDepthMask(GL_TRUE);
+                // Draw the box
+                glDrawElementsBaseVertex(
+                    GL_TRIANGLES,
+                    6,
+                    GL_UNSIGNED_INT,
+                    (void *)(i * 6 * sizeof(GLuint)),
+                    0
+                );
+
+                // glDrawElements(
+                //     GL_TRIANGLES,    // mode
+                //     36,              // number of indices
+                //     GL_UNSIGNED_INT, // type
+                //     (void *)0        // element array buffer offset
+                // );
+
+            }
 
             glBindVertexArray(0);
             glDisableVertexAttribArray(0);
@@ -356,7 +377,11 @@ class Skybox{
             glDeleteBuffers(1, &indexBufferID);
             glDeleteVertexArrays(1, &vertexArrayID);
             glDeleteBuffers(1, &uvBufferID);
-            glDeleteBuffers(1, &textureID);
+            // glDeleteBuffers(1, &textureID);
+            for(int i=0; i<textureIDs.size(); i++){
+                glDeleteTextures(1, &textureIDs[i]);
+                // glDeleteBuffers(1, &textureIDs[i]);
+            }
             glDeleteProgram(programID);
         }
 };

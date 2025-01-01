@@ -6,8 +6,8 @@
 using namespace glm;
 
 class Camera{
-    vec3 cameraPosition = vec3(0, 10, 0);
-    vec3 cameraFront    = vec3(0, 10, -1);
+    vec3 cameraPosition = vec3(0, 5, 0);
+    vec3 cameraFront    = vec3(0, 5, -1);
     const vec3 cameraUp       = vec3(0, 1, 0);
 
     vec3 target;
@@ -63,8 +63,8 @@ class Camera{
         }
 
         void resetCamera(){
-            cameraPosition  = vec3(0, 10, 0);
-            cameraFront     = vec3(0, 10, -1);
+            cameraPosition  = vec3(0, 5, 0);
+            cameraFront     = vec3(0, 5, -1);
             yawAngle        = 0;
         }
 

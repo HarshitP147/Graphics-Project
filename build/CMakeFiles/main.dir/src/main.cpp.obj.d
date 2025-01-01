@@ -537,9 +537,9 @@ CMakeFiles/main.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:\Users\Harshit\ Pandit\Desktop\graphics-project\src\util/LoadShaders.h \
  C:\Users\Harshit\ Pandit\Desktop\graphics-project\src\util/CheckError.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/model.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/landscape.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/grid.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/skybox.h \
- C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/Hut.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/camera.h \
+ C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/tree.h \
  C:/Users/HARSHI~1/Desktop/GRAPHI~2/src/headers/robot.h

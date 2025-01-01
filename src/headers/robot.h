@@ -9,7 +9,8 @@ class Robot {
 	GLuint lightIntensityID;
 	GLuint programID;
 
-    std::vector<GLuint> textureIDs;
+    glm::vec3 position;
+    GLfloat angle;
 
 	tinygltf::Model model;
 
@@ -73,11 +74,7 @@ class Robot {
 
         void computeLocalNodeTransform(const tinygltf::Model& model,
             int nodeIndex,
-            std::vector<glm::mat4> &localTransforms)
-        {
-            // ---------------------------------------
-            // TODO: your code here
-            // ---------------------------------------
+            std::vector<glm::mat4> &localTransforms){
             const tinygltf::Node &node = model.nodes[nodeIndex];
 
             localTransforms[nodeIndex] = getNodeTransform(node);
@@ -92,12 +89,7 @@ class Robot {
         void computeGlobalNodeTransform(const tinygltf::Model& model,
             const std::vector<glm::mat4> &localTransforms,
             int nodeIndex, const glm::mat4& parentTransform,
-            std::vector<glm::mat4> &globalTransforms)
-        {
-            // ----------------------------------------
-            // TODO: your code here
-            // ----------------------------------------
-
+            std::vector<glm::mat4> &globalTransforms){
             // Find the global transformations
             globalTransforms[nodeIndex] = parentTransform * localTransforms[nodeIndex];
 
@@ -113,7 +105,6 @@ class Robot {
         std::vector<SkinObject> prepareSkinning(const tinygltf::Model &model) {
             std::vector<SkinObject> skinObjects;
 
-            // In our Blender exporter, the default number of joints that may influence a vertex is set to 4, just for convenient implementation in shaders.
 
             for (size_t i = 0; i < model.skins.size(); i++) {
                 SkinObject skinObject;
@@ -140,11 +131,6 @@ class Robot {
                 skinObject.globalJointTransforms.resize(model.nodes.size());
                 skinObject.jointMatrices.resize(model.nodes.size());
 
-
-                // ----------------------------------------------
-                // TODO: your code here to compute joint matrices
-                // ----------------------------------------------
-
                 std::vector<glm::mat4> localTransforms(model.nodes.size());
                 std::vector<glm::mat4> globalTransforms(model.nodes.size());
 
@@ -161,50 +147,22 @@ class Robot {
                     skinObject.jointMatrices[j] = globalTransforms[jointNodeIndex] * skinObject.inverseBindMatrices[j];
                 }
 
-                // std::vector<glm::mat4> localNodeTransforms(model.nodes.size());
-
-                // glm::mat4 parentTransform(1.0f);
-                // std::vector<glm::mat4> globalNodeTransforms(model.nodes.size());
-
-
-                // int rootNodeIndex = skin.joints[0];
-
-                // // Compute local transforms at each node
-                // computeLocalNodeTransform(model, rootNodeIndex, localNodeTransforms);
-
-                // // Compute global transforms at each node
-                // computeGlobalNodeTransform(model, localNodeTransforms, rootNodeIndex, parentTransform, globalNodeTransforms);
-                // // skinObject.globalJointTransforms = globalNodeTransforms;
-
-                // for (size_t j = 0; j < skinObject.globalJointTransforms.size(); ++j) {
-                //     int jointNodeIndex = skin.joints[j];
-                //     skinObject.jointMatrices[j] = [jointNodeIndex] * skinObject.inverseBindMatrices[j];
-                // }
-
-                // ----------------------------------------------
-
                 skinObjects.push_back(skinObject);
             }
             return skinObjects;
         }
 
-
         // Called once after model is loaded
-        void bindModel(tinygltf::Model &model)
-        {
-            // Ensure we have a MeshData entry for each mesh in the model
+        void bindModel(tinygltf::Model &model){
             allMeshData.resize(model.meshes.size());
 
-            // For each root node in the default scene, recursively bind
             const tinygltf::Scene &scene = model.scenes[model.defaultScene];
             for (int rootNodeIndex : scene.nodes) {
                 bindModelNodes(model, rootNodeIndex);
             }
         }
-
         // Recursively process a node and its children
-        void bindModelNodes(tinygltf::Model &model, int nodeIndex)
-        {
+        void bindModelNodes(tinygltf::Model &model, int nodeIndex){
             const tinygltf::Node &node = model.nodes[nodeIndex];
 
             // If this node references a mesh, bind it
@@ -224,34 +182,23 @@ class Robot {
             // Reference to the MeshData entry for this mesh
             MeshData &meshData = allMeshData[meshIndex];
 
-            // First, prepare all VBOs for this entire model if you haven't yet
-            // (Sometimes you'd do this once per BufferView, as you did before.)
-            // But let's assume it's done outside, or we do it inline here.
-
-            // For each primitive in this mesh:
             size_t startIndex = primitiveObjects.size();
-            // We'll append new PrimitiveObjects to globalPrimitives
 
             for (size_t p = 0; p < mesh.primitives.size(); p++) {
                 const tinygltf::Primitive &primitive = mesh.primitives[p];
 
-                // 1. Create a new VAO
                 GLuint vao;
                 glGenVertexArrays(1, &vao);
                 glBindVertexArray(vao);
 
-                // 2. Prepare any needed VBOs (positions, normals, etc.) –
-                //    if you’ve already created them in a separate pass, just bind them here
                 std::map<int, GLuint> vbos;
 
-                // For each attribute in the primitive
                 for (auto &attrib : primitive.attributes) {
                     int accessorIndex = attrib.second;
                     const tinygltf::Accessor &accessor = model.accessors[accessorIndex];
                     const tinygltf::BufferView &bv = model.bufferViews[accessor.bufferView];
                     const tinygltf::Buffer &buf = model.buffers[bv.buffer];
 
-                    // If you haven't created a VBO for this bufferView yet, do so:
                     if (vbos.find(accessor.bufferView) == vbos.end()) {
                         GLuint vbo;
                         glGenBuffers(1, &vbo);
@@ -260,7 +207,6 @@ class Robot {
                                     &buf.data[bv.byteOffset], GL_STATIC_DRAW);
                         vbos[accessor.bufferView] = vbo;
                     } else {
-                        // If we already have a VBO for this bufferView, just bind it
                         glBindBuffer(bv.target, vbos[accessor.bufferView]);
                     }
 
@@ -268,7 +214,7 @@ class Robot {
                     int byteStride = accessor.ByteStride(bv);
                     int size = 1;
                     if (accessor.type != TINYGLTF_TYPE_SCALAR) {
-                        size = accessor.type; // e.g. VEC3 => size=3, VEC2 => size=2, etc.
+                        size = accessor.type;
                     }
                     int location = -1;
                     if (attrib.first == "POSITION")  location = 0;
@@ -276,6 +222,7 @@ class Robot {
                     if (attrib.first == "TEXCOORD_0")location = 2;
                     if (attrib.first == "JOINTS_0")  location = 3;
                     if (attrib.first == "WEIGHTS_0") location = 4;
+                    if (attrib.first == "COLOR_0")   location = 5;
 
                     if (location >= 0) {
                         glEnableVertexAttribArray(location);
@@ -288,7 +235,6 @@ class Robot {
                     }
                 }
 
-                // Also bind the index buffer (ELEMENT_ARRAY_BUFFER)
                 {
                     const tinygltf::Accessor &indexAccessor = model.accessors[primitive.indices];
                     const tinygltf::BufferView &ibv = model.bufferViews[indexAccessor.bufferView];
@@ -310,7 +256,6 @@ class Robot {
 
                 glBindVertexArray(0);
 
-                // 3. Add a new entry in globalPrimitives
                 PrimitiveObject primObj;
                 primObj.vertexArrayObject = vao;
                 primObj.vertexBufferObjects = vbos;
@@ -325,10 +270,7 @@ class Robot {
             }
         }
 
-
-
-        std::vector<AnimationObject> prepareAnimation(const tinygltf::Model &model)
-        {
+        std::vector<AnimationObject> prepareAnimation(const tinygltf::Model &model){
             std::vector<AnimationObject> animationObjects;
             for (const auto &anim : model.animations) {
                 AnimationObject animationObject;
@@ -392,21 +334,17 @@ class Robot {
         void drawMesh(const tinygltf::Model &model, int meshIndex){
             const tinygltf::Mesh &mesh = model.meshes[meshIndex];
 
-            // Retrieve the list of global primitive indices for this mesh
             const std::vector<int> &primIndices = allMeshData[meshIndex].primitiveIndices;
 
             for (size_t p = 0; p < mesh.primitives.size(); p++) {
                 int primID = primIndices[p]; // index into globalPrimitives
                 const PrimitiveObject &primObj = primitiveObjects[primID];
 
-                // Bind the VAO
                 glBindVertexArray(primObj.vertexArrayObject);
 
-                // Get the index accessor
                 const tinygltf::Primitive &primitive = mesh.primitives[p];
                 const tinygltf::Accessor &indexAccessor = model.accessors[primitive.indices];
 
-                // We already stored the IBO in primObj.vertexBufferObjects, so just ensure it's bound:
                 GLuint ibo = primObj.vertexBufferObjects.at(indexAccessor.bufferView);
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
@@ -443,9 +381,7 @@ class Robot {
             }
         }
 
-
-        int findKeyframeIndex(const std::vector<float>& times, float animationTime)
-        {
+        int findKeyframeIndex(const std::vector<float>& times, float animationTime){
             int left = 0;
             int right = times.size() - 1;
 
@@ -474,7 +410,6 @@ class Robot {
             float time,
             std::vector<glm::mat4> &nodeTransforms)
         {
-            // There are many channels so we have to accumulate the transforms
             for (const auto &channel : anim.channels) {
 
                 int targetNodeIndex = channel.target_node;
@@ -498,9 +433,7 @@ class Robot {
                 float t0 = times[keyframeIndex];
                 float t1 = times[keyframeIndex+1];
 
-                // float factor = (animationTime-t1)/(t0-t1);
                 float factor = (animationTime  - t1)/ (t1 - t0);
-
 
                 if (channel.target_path == "translation") {
                     glm::vec3 translation0, translation1;
@@ -543,22 +476,19 @@ class Robot {
         }
 
         void updateSkinning(const std::vector<glm::mat4> &nodeTransforms) {
-            std::vector<glm::mat4> globalAllNodes(model.nodes.size(), glm::mat4(1.0f));
-
-            const tinygltf::Scene &scene = model.scenes[model.defaultScene];
-            for (int rootNodeIndex : scene.nodes){
-                computeGlobalNodeTransform(model, nodeTransforms, rootNodeIndex, glm::mat4(1.0f), globalAllNodes);
-            }
-
-            for (size_t i=0; i<skinObjects.size(); i++){
-                SkinObject &skinObject = skinObjects[i];
-
+            for(size_t i=0; i<skinObjects.size(); i++){
                 const tinygltf::Skin &skin = model.skins[i];
 
-                for(size_t j=0; j<skin.joints.size(); j++){
-                    int jointNodeIndex = skin.joints[j];
+                std::vector<glm::mat4> globalNodeTransforms(skin.joints.size());
 
-                    skinObject.jointMatrices[j] = globalAllNodes[jointNodeIndex] * skinObject.inverseBindMatrices[j];
+                int rootNodeIndex = skin.joints[0];
+
+                computeGlobalNodeTransform(model, nodeTransforms, rootNodeIndex, glm::mat4(1.0f), globalNodeTransforms);
+                skinObjects[i].globalJointTransforms = globalNodeTransforms;
+
+                for(size_t j=0; j< skinObjects[i].jointMatrices.size(); j++){
+                    int jointIndex = skin.joints[j];
+                    skinObjects[i].jointMatrices[j] = skinObjects[i].globalJointTransforms[jointIndex] * skinObjects[i].inverseBindMatrices[j];
                 }
             }
 
@@ -589,7 +519,6 @@ class Robot {
         }
 
         void initialize() {
-            // Modify your path if needed
             if(!loadModel(model, "../src/assets/models/bot/waving.gltf")){
                 return;
             }
@@ -625,7 +554,9 @@ class Robot {
         }
 
     public:
-        Robot(){
+        Robot(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), GLfloat angle = 0.0f) {
+            this->position = position;
+            this->angle = angle;
             initialize();
         }
 
@@ -637,17 +568,16 @@ class Robot {
             const tinygltf::Animation &anim = model.animations[0];
             const AnimationObject &animationObject = animationObjects[0];
 
-            std::vector<glm::mat4> localTransforms(model.nodes.size());
-            for(size_t i=0; i<model.nodes.size(); i++){
-                localTransforms[i] = glm::mat4(1.0);
-                localTransforms[i] = getNodeTransform(model.nodes[i]);
+
+            const tinygltf::Skin &skin = model.skins[0];
+            std::vector<glm::mat4> nodeTransforms(skin.joints.size());
+            for(size_t i=0; i<nodeTransforms.size(); i++){
+                nodeTransforms[i] = glm::mat4(1.0);
             }
 
-            updateAnimation(model, anim, animationObject, time, localTransforms);
+            updateAnimation(model, anim, animationObject, time, nodeTransforms);
 
-            // std::vector<glm::mat4> globalTransforms(model.nodes.size(), glm::mat4(1.0f));
-
-            updateSkinning(localTransforms);
+            updateSkinning(nodeTransforms);
         }
 
 	    void render(glm::mat4 cameraMatrix) {
@@ -656,8 +586,17 @@ class Robot {
             // Set model matrix
             glm::mat4 modelMatrix = glm::mat4(1.0f);
 
+            // Translate the model
+            modelMatrix = glm::translate(modelMatrix, position);
+
             // Scale the model
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0f));
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.1f));
+
+            // Rotate by X axis
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+            // Rotation by Y axis
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
 
             // Set camera
             glm::mat4 mvp = cameraMatrix * modelMatrix;

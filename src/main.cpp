@@ -22,11 +22,11 @@
 #include "util/LoadShaders.h"
 #include "util/CheckError.h"
 
-#include <headers/model.h>
+#include <headers/landscape.h>
 #include <headers/grid.h>
 #include <headers/skybox.h>
-#include <headers/Hut.h>
 #include <headers/camera.h>
+#include <headers/tree.h>
 #include <headers/robot.h>
 
 
@@ -108,11 +108,17 @@ int main() {
     // Now we initialize our objects
     camera = new Camera();
 
-    Skybox sb("../src/assets/skyboxes/skybox1.jpg");
+    Skybox sb;
 
     Robot rb;
 
-    Grid gd;
+    // Robot r1(glm::vec3(100, 0, 100), 20);
+
+    // Robot r2(glm::vec3(-100, 0, -100), -35);
+
+    // Tree tr;
+    Landscape ls;
+
 
     static double lastTime = glfwGetTime();
     float time = 0.0f;
@@ -129,6 +135,8 @@ int main() {
 
         time += deltaTime;
         rb.update(time);
+        // r1.update(time);
+        // r2.update(time);
 
         glm::mat4 viewMatrix = camera->getViewMatrix();
         glm::mat4 projectionMatrix = camera->getProjectionMatrix();
@@ -141,8 +149,14 @@ int main() {
 
         sb.render(skyBoxVP);
 
-        gd.render(vp);
         rb.render(vp);
+
+        // r1.render(vp);
+        // r2.render(vp);
+
+
+        // tr.render(vp);
+        ls.render(vp);
 
         // Frames tracking
         frames += 1;

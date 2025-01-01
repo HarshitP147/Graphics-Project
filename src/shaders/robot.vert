@@ -11,17 +11,16 @@ layout(location = 4) in vec4 a_weight;
 out vec3 worldPosition;
 out vec3 worldNormal;
 out vec2 uv;
+out vec4 color;
 
 uniform mat4 MVP;
 uniform mat4 u_jointMatrix[100];
 
 void main() {
 
-    // World-space geometry
     worldPosition = vertexPosition;
     worldNormal = vertexNormal;
 
-    // UV coordinates
     uv = vertexUV;
 
 
@@ -31,6 +30,6 @@ void main() {
                         a_weight.w * u_jointMatrix[int(a_joint.w)] ;
 
     // Transform vertex
-    gl_Position = MVP * vec4(vertexPosition, 1.0);
+    gl_Position = MVP * skinMatrix * vec4(vertexPosition, 1.0);
 
 }
