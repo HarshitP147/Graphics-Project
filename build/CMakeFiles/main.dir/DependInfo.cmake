@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/Harshit Pandit/Desktop/graphics-project/src/main.cpp" "CMakeFiles/main.dir/src/main.cpp.obj" "gcc" "CMakeFiles/main.dir/src/main.cpp.obj.d"
-  "C:/Users/Harshit Pandit/Desktop/graphics-project/src/util/LoadShaders.cpp" "CMakeFiles/main.dir/src/util/LoadShaders.cpp.obj" "gcc" "CMakeFiles/main.dir/src/util/LoadShaders.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

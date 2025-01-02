@@ -129,6 +129,7 @@ int main() {
     House h3(glm::vec3(-92, 0, -39));
     House h4(glm::vec3(-83, 0, 28));
     House h5(glm::vec3(56, 0, 03));
+    House h6(glm::vec3(12,0, 45));
 
     static double lastTime = glfwGetTime();
     float time = 0.0f;
@@ -181,6 +182,7 @@ int main() {
         h3.render(vp);
         h4.render(vp);
         h5.render(vp);
+        h6.render(vp);
 
         // Frames tracking
         frames += 1;

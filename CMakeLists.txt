@@ -19,7 +19,7 @@ include_directories(
 
 add_executable(main
 	src/main.cpp
-	src/util/LoadShaders.cpp
+	src/util/
 	src/headers/
 )
 target_link_libraries(main

@@ -178,30 +178,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/util/LoadShaders.obj: src/util/LoadShaders.cpp.obj
-.PHONY : src/util/LoadShaders.obj
-
-# target to build an object file
-src/util/LoadShaders.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/src/util/LoadShaders.cpp.obj
-.PHONY : src/util/LoadShaders.cpp.obj
-
-src/util/LoadShaders.i: src/util/LoadShaders.cpp.i
-.PHONY : src/util/LoadShaders.i
-
-# target to preprocess a source file
-src/util/LoadShaders.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/src/util/LoadShaders.cpp.i
-.PHONY : src/util/LoadShaders.cpp.i
-
-src/util/LoadShaders.s: src/util/LoadShaders.cpp.s
-.PHONY : src/util/LoadShaders.s
-
-# target to generate assembly for a file
-src/util/LoadShaders.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\main.dir\build.make CMakeFiles/main.dir/src/util/LoadShaders.cpp.s
-.PHONY : src/util/LoadShaders.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -216,9 +192,6 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
-	@echo ... src/util/LoadShaders.obj
-	@echo ... src/util/LoadShaders.i
-	@echo ... src/util/LoadShaders.s
 .PHONY : help
 
 

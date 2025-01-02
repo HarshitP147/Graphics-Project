@@ -6,12 +6,6 @@
   "output": "CMakeFiles/main.dir/src/main.cpp.obj"
 },
 {
-  "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/main.dir/includes_CXX.rsp -g -o CMakeFiles\\main.dir\\src\\util\\LoadShaders.cpp.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\src\\util\\LoadShaders.cpp\"",
-  "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/src/util/LoadShaders.cpp",
-  "output": "CMakeFiles/main.dir/src/util/LoadShaders.cpp.obj"
-},
-{
   "directory": "C:/Users/Harshit Pandit/Desktop/graphics-project/build/external/glad-3.3",
   "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -Dglad_EXPORTS @CMakeFiles/glad.dir/includes_C.rsp -g -o CMakeFiles\\glad.dir\\src\\gl.c.obj -c \"C:\\Users\\Harshit Pandit\\Desktop\\graphics-project\\external\\glad-3.3\\src\\gl.c\"",
   "file": "C:/Users/Harshit Pandit/Desktop/graphics-project/external/glad-3.3/src/gl.c",
