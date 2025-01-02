@@ -12,6 +12,9 @@ class Robot {
     glm::vec3 position;
     GLfloat angle;
 
+    glm::vec3 lightPosition;
+    glm::vec3 lightIntensity;
+
 	tinygltf::Model model;
 
 	// Each VAO corresponds to each mesh primitive in the GLTF model
@@ -141,10 +144,11 @@ class Robot {
 
                 // Compute global transforms at each node
                 computeGlobalNodeTransform(model, localTransforms, rootNodeIndex, glm::mat4(1.0f), globalTransforms);
+                skinObject.globalJointTransforms = globalTransforms;
 
-                for(size_t j=0; j<skinObject.globalJointTransforms.size(); j++){
+                for(size_t j=0; j<skin.joints.size(); j++){
                     int jointNodeIndex = skin.joints[j];
-                    skinObject.jointMatrices[j] = globalTransforms[jointNodeIndex] * skinObject.inverseBindMatrices[j];
+                    skinObject.jointMatrices[j] = skinObject.globalJointTransforms[jointNodeIndex] * skinObject.inverseBindMatrices[j];
                 }
 
                 skinObjects.push_back(skinObject);
@@ -479,14 +483,14 @@ class Robot {
             for(size_t i=0; i<skinObjects.size(); i++){
                 const tinygltf::Skin &skin = model.skins[i];
 
-                std::vector<glm::mat4> globalNodeTransforms(skin.joints.size());
+                std::vector<glm::mat4> globalNodeTransforms(model.nodes.size());
 
                 int rootNodeIndex = skin.joints[0];
 
                 computeGlobalNodeTransform(model, nodeTransforms, rootNodeIndex, glm::mat4(1.0f), globalNodeTransforms);
                 skinObjects[i].globalJointTransforms = globalNodeTransforms;
 
-                for(size_t j=0; j< skinObjects[i].jointMatrices.size(); j++){
+                for(size_t j=0; j<skin.joints.size(); j++){
                     int jointIndex = skin.joints[j];
                     skinObjects[i].jointMatrices[j] = skinObjects[i].globalJointTransforms[jointIndex] * skinObjects[i].inverseBindMatrices[j];
                 }
@@ -554,9 +558,11 @@ class Robot {
         }
 
     public:
-        Robot(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), GLfloat angle = 0.0f) {
+        Robot(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), GLfloat angle = 0.0f, glm::vec3 lightPosition = glm::vec3(-275.0f, 500.0f, 800.0f), glm::vec3 lightIntensity = glm::vec3(5e6, 5e6, 5e6)) {
             this->position = position;
             this->angle = angle;
+            this->lightPosition = lightPosition;
+            this->lightIntensity = lightIntensity;
             initialize();
         }
 
@@ -590,7 +596,10 @@ class Robot {
             modelMatrix = glm::translate(modelMatrix, position);
 
             // Scale the model
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.1f));
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.025f));
+
+            // Translate by Y axis
+            modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 10.0f, 0.0f));
 
             // Rotate by X axis
             modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -614,8 +623,8 @@ class Robot {
             // -----------------------------------------------------------------
 
             // Set light data
-            glUniform3fv(lightPositionID, 1, &glm::vec3(-275.0f, 500.0f, 800.0)[0]);
-            glUniform3fv(lightIntensityID, 1, &glm::vec3(5e6, 5e6, 5e6)[0]);
+            glUniform3fv(lightPositionID, 1, glm::value_ptr(lightPosition));
+            glUniform3fv(lightIntensityID, 1, glm::value_ptr(lightIntensity));
 
             // Draw the GLTF model
             drawModel(model);

@@ -1,5 +1,3 @@
-
-
 class Skybox{
     GLfloat vertex_buffer_data[72] = {
             // Back face

@@ -6,9 +6,9 @@ out vec4 FragColor;
 uniform sampler2D textureSampler;
 
 // Lighting parameters
-uniform vec3 lightDirection = normalize(vec3(-0.5, -1.0, -0.3)); // Directional light
-uniform vec3 lightIntensity = vec3(1.0, 1.0, 1.0); // Light intensity
-uniform vec3 ambientColor = vec3(0.2, 0.2, 0.2);   // Ambient light
+uniform vec3 lightDirection;
+uniform vec3 lightIntensity;
+uniform vec3 ambientColor = vec3(0.9);
 
 void main() {
     // Sample the texture color
@@ -27,7 +27,4 @@ void main() {
 
     // Output final color
     FragColor = vec4(finalColor, 1.0);
-
-    // FragColor = vec4(baseColor, 1.0);
-
 }

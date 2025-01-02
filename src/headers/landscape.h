@@ -3,6 +3,9 @@ class Landscape{
     std::vector<GLfloat> uvs;
     std::vector<GLuint> indices;
 
+    glm::vec3 position;
+    glm::vec3 lightPosition;
+    glm::vec3 lightIntensity;
 
     // Vertex buffer object IDs
     GLuint vertexArrayID;
@@ -44,7 +47,11 @@ class Landscape{
         }
 
     public:
-        Landscape(){
+        Landscape(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 lightPosition = glm::vec3(10.0f, 100.0f, 100.0f), glm::vec3 lightIntensity = glm::vec3(1e7)){
+            this->position = position;
+            this->lightPosition = lightPosition;
+            this->lightIntensity = lightIntensity;
+
             tinyobj::attrib_t attrib;
             std::vector<tinyobj::shape_t> shapes;
             std::vector<tinyobj::material_t> materials;
@@ -125,8 +132,9 @@ class Landscape{
 
             CheckOpenGLErrors("Landscape::render - before mvp");
 
-
             glm::mat4 modelMatrix = glm::mat4(1.0f);
+
+            modelMatrix = glm::translate(modelMatrix, position);
 
             glm::mat4 mvp = cameraMatrix * modelMatrix;
 
@@ -136,6 +144,10 @@ class Landscape{
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, textureID);
             glUniform1i(textureSamplerID, 0);
+
+            // Set light data
+            glUniform3fv(glGetUniformLocation(programID, "lightPosition"), 1, &lightPosition[0]);
+            glUniform3fv(glGetUniformLocation(programID, "lightIntensity"), 1, &lightIntensity[0]);
 
             glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void *)0);
 

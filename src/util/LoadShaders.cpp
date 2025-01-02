@@ -47,8 +47,10 @@ GLuint LoadShadersFromFile(const char *vertex_file_path, const char *fragment_fi
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
 
+	printf("Compiling shader programs\n");
+
 	// Compile Vertex Shader
-	printf("Compiling vertex shader : %s\n", vertex_file_path);
+	// printf("Compiling vertex shader : %s\n", vertex_file_path);
 	char const *VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
@@ -65,7 +67,7 @@ GLuint LoadShadersFromFile(const char *vertex_file_path, const char *fragment_fi
 	}
 
 	// Compile Fragment Shader
-	printf("Compiling fragment shader : %s\n", fragment_file_path);
+	// printf("Compiling fragment shader : %s\n", fragment_file_path);
 	char const *FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
@@ -117,8 +119,10 @@ GLuint LoadShadersFromString(std::string VertexShaderCode, std::string FragmentS
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
 
+	printf("Compiling shader programs\n");
+
 	// Compile Vertex Shader
-	printf("Compiling vertex shader\n");
+	// printf("Compiling vertex shader\n");
 	char const *VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
@@ -135,7 +139,7 @@ GLuint LoadShadersFromString(std::string VertexShaderCode, std::string FragmentS
 	}
 
 	// Compile Fragment Shader
-	printf("Compiling fragment shader\n");
+	// printf("Compiling fragment shader\n");
 	char const *FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
